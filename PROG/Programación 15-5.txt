@@ -1,0 +1,144 @@
+#include <stdio.h>
+#include <math.h>
+#define CUAD(x) (x*x)
+
+//Lo contrario(!=) de menor es MAYOR O IGUAL( no solo MENOR)
+#define PI 3.141
+int main(void){
+    float radio, area;
+    //const float PI = 3.14 (se puede poner así, en vez de como arriba)
+    printf("Calculadora de Area\n");
+
+    do{
+        printf("Vamos a calcular el área de una circunferencia. Por favor, ingrese el radio de la misma: \n");
+        scanf("%f", &radio);
+        if(radio <= 0){
+            printf("ERROR. Reingrese el área de la circunferencia: \n");}
+    }while(radio <= 0);
+
+    //area = PI * radio * radio; Así se hace sin biblioteca math
+    //area = pow(radio,2) * PI; //Así se hace utilizando la biblioteca math
+    area = CUAD(radio) * PI; //Macro
+    printf("El área de la circunferencia de radio %.1f es %.1f", radio, area);
+
+    return 0;
+}
+
+
+-------------------------------------
+
+#include <stdio.h>
+#include <math.h>
+#define CUAD(num) (num*num)
+
+//Lo contrario(!=) de menor es MAYOR O IGUAL( no solo MENOR)
+#define PI 3.141
+int main(void){
+    float radio, area;
+    //const float PI = 3.14 (se puede poner así, en vez de como arriba)
+    printf("Calculadora de Area\n");
+
+    do{
+        printf("Vamos a calcular el área de una circunferencia. Por favor, ingrese el radio de la misma: \n");
+        scanf("%f", &radio);
+        if(radio <= 0){
+            printf("ERROR. Reingrese el área de la circunferencia: \n");}
+    }while(radio <= 0);
+
+    //area = PI * radio * radio; Así se hace sin biblioteca math
+    //area = pow(radio,2) * PI; //Así se hace utilizando la biblioteca math
+    area = CUAD(radio) * PI; //Macro
+    printf("El área de la circunferencia de radio %.1f es %.1f", radio, area);
+
+    return 0;
+}
+
+---------------------------------------------
+* CON WHILE *
+ 
+#include <stdio.h>
+#include <math.h>
+#define CUAD(num) (num*num)
+
+//Lo contrario(!=) de menor es MAYOR O IGUAL( no solo MENOR)
+#define PI 3.141
+int main(void){
+    float radio, area;
+    //const float PI = 3.14 (se puede poner así, en vez de como arriba)
+    printf("Calculadora de Area\n");
+    printf("Vamos a calcular el área de una circunferencia. Por favor, ingrese el radio de la misma: \n");
+    scanf("%f", &radio);
+
+    while(radio<=0){
+        printf("ERROR. Ingrese un numero valido\n");
+        scanf("%f", &radio);
+    }
+
+    area = CUAD(radio) * PI; //Macro
+    printf("El área de la circunferencia de radio %.2f es %.2f", radio, area);
+
+    return 0;
+}
+
+
+* TERMINA CUANDO INGRESA UN CERO *
+
+#include <stdio.h>
+#include <math.h>
+#define CUAD(num) (num*num)
+
+//Lo contrario(!=) de menor es MAYOR O IGUAL( no solo MENOR)
+#define PI 3.141
+int main(void){
+    float radio, area;
+    //const float PI = 3.14 (se puede poner así, en vez de como arriba)
+    printf("Calculadora de Area\n");
+
+    do{
+      printf("Vamos a calcular el area de una circunferencia. Por favor, ingrese el radio de la misma (positivo para calcular o 0 para salir):\n");
+      scanf("%f", &radio);
+
+      while(radio<0){
+        printf("ERROR. Ingrese un numero valido\n");
+        scanf("%f", &radio);
+      }
+
+      if(radio!=0){
+        area = CUAD(radio) * PI; //Macro
+        printf("El area de la circunferencia de radio %.2f es %.2f\n", radio, area);
+      }
+
+    }while(radio!=0);
+ 
+    return 0;
+}		
+
+------------------------------------
+
+* ¿CUAL NUMERO ES MAYOR Y CUAL MENOR? *
+
+#include <stdio.h>
+#define SALIR 0
+
+int main(void){
+    int valor, mayor, menor;
+    printf("Ingrese un valor(o para salir): \n");
+    scanf("%d", &valor);
+    if(valor!=SALIR){
+        mayor = valor;
+        menor = valor;
+
+    do{
+        printf("Ingrese un valor (0 para salir): \n");
+        scanf("%d", &valor);
+        if(valor != SALIR){
+            if(valor > mayor)mayor = valor;
+            if(valor < menor)menor = valor;
+        }
+     }while(valor!=SALIR);
+     printf("El mayor valor ingresado fue: %d\n",mayor);
+     printf("El menor valor ingresado fue: %d\n",menor);
+    }
+}
+
+

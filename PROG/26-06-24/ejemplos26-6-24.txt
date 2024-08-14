@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    int i=0;
+    char txt[4]="Hola\0";
+
+    for(i=0;txt[i]!=0;i++){
+        printf("%c",txt[i]);
+    }
+
+    return 0;
+}
+
+------------------------------------
+
+#include <stdio.h>
+
+int main() {
+    int i=0;
+    char txt[]="Hola\0";
+
+    printf("%s",txt);
+
+    return 0;
+}
+
+------------------------------------
+
+#include <stdio.h>
+
+int main() {
+    char nombre[30];
+
+    printf("Ingrese su nombre:\n");
+    scanf("%s",&nombre[0]);
+    printf("Hola, %s", nombre);
+
+    return 0;
+}
+
+
+-------------------------------------
+

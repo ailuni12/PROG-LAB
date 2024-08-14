@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+int main() {
+    int var=10;
+
+    //printf("%d\n", var + 1);
+    //printf("%d\n", var);
+
+    //printf("%d\n", var++); //post incrememnto
+    //printf("%d\n", var);
+
+    printf("%d\n", ++var); //pre incrememnto
+    printf("%d\n", var);
+    return 0;
+}

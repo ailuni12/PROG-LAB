@@ -1,0 +1,87 @@
+//	Centro de distribución de ventas en el cual vendemos todo tipo de productos, uno en CABA, 2 Corrientes, 3 Misiones y 4 San Luis.
+//	Vendemos de a un producto por cliente.
+//	La carga se realizará hasta que el código de cliente sea -1, en ese momento se corta.
+//Lo que se le va a pedir al usuario son: Código de cliente, código de ciudad, cantidad y precio.
+//Lo que quiero saber yo es:
+//	A - Total de ventas por centro
+//	B - Total vendido en general
+//	C - Cantidad de productos por centro
+//	D - Quien vendió más?
+
+Algoritmo JULIO2EJ2
+	Definir centrosDeVenta, codCliente, codCiudad, cantidad, precio Como Numero
+	Definir i Como Entero
+	Definir ventasTotalesGlobales Como Real
+	Definir topVentas Como Real
+	Definir centroTopVentas Como Entero
+	topVentas<-0
+	Definir ciudades Como Cadena
+	//centrosDeVenta:
+	//columna 0: codigo de local
+	//columna 1: total de ventas unitarias por local
+	//columna 2: total de ventas (precio unitario * ventas unitarias)
+	Dimension centrosDeVenta[4,3]
+	Dimension ciudades[4]
+	
+	Para i<-0 Hasta 4-1 Con Paso 1 Hacer
+		centrosDeVenta[i,0]<-0
+		centrosDeVenta[i,1]<-0
+		centrosDeVenta[i,2]<-0
+	FinPara
+	
+	ciudades[0]<-"CABA"
+	ciudades[1]<-"Corrientes"
+	ciudades[2]<-"Misiones"
+	ciudades[3]<-"San Luis"
+	
+	Mostrar "Ingresar Codigo de Cliente (-1 para terminar)."
+	Leer codCliente
+	Mientras codCliente<>(-1) Hacer
+		Mostrar "Codigo de Local (1 a 4):"
+		Leer codCiudad
+		Mostrar "Total de Productos:"
+		Leer cantidad
+		Mostrar "Precio por Producto:"
+		Leer precio
+		Mostrar "Cliente: ", codCliente
+		Mostrar "Local: ", codCiudad
+		Mostrar "Cantidad: ", cantidad
+		centrosDeVenta[codCiudad-1,1]<-centrosDeVenta[codCiudad-1,1]+cantidad
+		Mostrar "Precio: ", precio
+		centrosDeVenta[codCiudad-1,2]<-centrosDeVenta[codCiudad-1,2]+cantidad*precio
+		
+		Mostrar "Código de Cliente:"
+		Leer codCliente
+	FinMientras
+	
+	ventasTotalesGlobales<-totalVentasCentros(centrosDeVenta)
+	
+	Para i<-0 Hasta 4-1 Con Paso 1 Hacer
+		Mostrar "Total Ventas Centro ", ciudades[i],": $", centrosDeVenta[i,2]
+		Mostrar "Productos Unitarios vendidos: ", centrosDeVenta[i,1]
+	FinPara
+	Mostrar " "
+	Mostrar "Total de Ventas Unitarias de todos los locales: ", ventasTotalesGlobales
+	
+	Para i<-0 Hasta 4-1 Con Paso 1 Hacer
+		Si centrosDeVenta[i,2]>topVentas Entonces
+			topVentas<-centrosDeVenta[i,2]
+			centroTopVentas<-i
+		FinSi
+	FinPara
+	
+	Mostrar "Centro con mayor recaudación total:"
+	Mostrar ciudades[centroTopVentas], ": $",topVentas 
+	
+FinAlgoritmo
+
+SubAlgoritmo ventasTotalesGlobales<-totalVentasCentros(centrosDeVenta)
+	Definir i Como Entero
+	Definir ventasTotalesGlobales Como Numero
+	ventasTotalesGlobales<-0
+	
+	Para i<-0 Hasta 4-1 Con Paso 1 Hacer
+		ventasTotalesGlobales<-ventasTotalesGlobales+centrosDeVenta[i,1]
+	FinPara
+	
+FinSubAlgoritmo

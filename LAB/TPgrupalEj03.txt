@@ -1,0 +1,40 @@
+TPgrupalEj03
+	
+	aflu, acu: N
+
+Comienzo
+	
+	acu<-0
+	
+	Escribir "APERTURA DE AFLUENTES PARA HIDROELÉCTRICA: "
+	Escribir "¿Desea abrir el 1er afluente?"
+	Escribir "Si ingrese 1. No ingrese 0: "
+	Leer aflu
+	Si aflu>=0 Y aflu<=1 Entonces
+		acu<-acu+aflu
+		Escribir "¿Desea abrir el 2do afluente?"
+		Escribir "Si ingrese 1. No ingrese 0: "
+		Leer aflu
+		Si aflu>=0 Y aflu<=1 Entonces
+			acu<-acu+aflu
+			Escribir "¿Desea abrir el 3er afluente?"
+			Escribir "Si ingrese 1. No ingrese 0: "
+			Leer aflu
+			Si aflu>=0 Y aflu<=1 Entonces
+				acu<-acu+aflu
+				Si acu>=2 Entonces
+					Escribir "HIDROELÉCTRICA EN FUNCIONAMIENTO."
+				SiNo
+					Escribir "HIDROELÉCTRICA SIN CAUDAL PARA FUNCIONAR."
+				Fin Si
+			SiNo
+				Escribir "Opción incorrecta."
+			FinSi
+		SiNo
+			Escribir "Opción incorrecta."
+		FinSi
+	SiNo
+		Escribir "Opción incorrecta."
+	Fin Si
+	
+Fin

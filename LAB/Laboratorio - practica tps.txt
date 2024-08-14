@@ -1,0 +1,580 @@
+///////////////////////TP2////////////////////////////////
+
+1) Se ingresa un valor de dos cifras, realizar un algoritmo que devuelva la cifra de las
+unidades y la cifra de las decenas. Utilizar mensajes de entrada y salida adecuados.
+
+TP2EJ1
+    numero: Z
+	decena, unidad: R
+Inicio
+	Escribir “Este programa determina que decena y unidad componen un número dado.  Ingrese a continuación un número de dos cifras para mostrar el resultado: ”
+    Leer numero
+
+    Si (-100 < numero < -9) y (9 < numero < 100) entonces
+        unidad <- numero MOD 10
+        decena <- TRUNC(numero/10)
+        Escribir "Decena: ", decena, " Unidad: ", unidad
+    Sino
+        Escribir "El número ingresado es incorrecto. Por favor inngrese un número de dos cifras."
+    FinSi
+Fin
+---------------------------------------------------------
+2) Escribir un programa para que, dado un número de tres cifras, imprima la cifra
+central. En la entrada de datos un mensaje debe decir “Indicar un número de tres cifras”,
+la salida será:
+
+Valor: XXX
+La cifra central es: X
+
+TP2EJ2
+    valor: Z
+    unidad, decena, centena: R
+Inicio
+    Escribir "Ingrese un valor: "
+    Leer valor
+
+    Si (-999 > valor > -100) y (100 > valor > 999)
+        Escribir "Valor incorrecto"
+    Sino
+        centena <- TRUNC(valor/100)
+        decena <- TRUNC(valor/10) - centena*10
+        unidad <- numero MOD 100
+        Escribir "Decena del numero: ", decena
+    FinSi
+Fin
+
+---------------------------------------------------------
+3) Un negocio de prendas de vestir decide hacer una liquidación de fin de temporada, le
+aplica a la mercadería un descuento del 18% sobre el precio marcado. Escribir un
+programa para que dado un precio de una prenda obtenga el precio con descuento. En la
+entrada de datos un mensaje debe decir: “Indicar precio de lista”, la salida será:
+
+Precio de lista: $XXXXX,XX
+Descuento: 18% sobre el precio de lista
+Precio con descuento: $XXXX,XX
+
+TP2EJ3
+    preciodelista, preciocondescuento: R
+    pocentajedescuento: N
+INICIO
+    Escribir "Ingrese el precio de lista y el porcentaje de descuento que quiere aplicar: "
+    Leer preciodelista, porcentajededescuento
+
+    preciocondescuento <- preciodelista - (preciodelista*porcentajededescuento)/100
+
+    Escribir "Precio de lista: $", preciodelista
+    Escribir "Descuento: ", porcentajededescuento, "% sobre el precio de lista"
+    Escribir "Precio con descuento: $", preciocondescuento
+FIN
+
+---------------------------------------------------------
+4)Escribir un programa para que dado un numero de dos cifras, imprima un nuevo
+número que resulte de sus cifras permutadas. En la entrada de datos un mensaje debe
+decir: “Indicar un número de dos cifras”, la salida será:
+Valor: XK (ej: 57)
+Valor permutado: KX (ej: 75)
+
+TP2EJ4
+    valor, valorperm, unidad, decena: N
+INICIO
+    Escribir "Indicar un valor de dos cifras: "
+    Leer valor
+
+    unidad <- valor MOD 10
+    decena <- TRUNC(valor/10)
+    valorperm <- unidad*10 + decena
+
+    Escribir "Valor: ", valor
+    Escribir "Valor Permutado: ", valorperm
+FIN
+
+---------------------------------------------------------
+5) Dada una fecha expresada con un entero de 6 dígitos, donde los dos primeros dígitos
+expresan el día, el tercero y el cuarto expresan el mes y los dos últimos expresan el año,
+obtener el mes. En la entrada de datos debe decir “Indicar una fecha como un entero de
+6 dígitos”, la salida será:
+
+Fecha: DDMMAA (ej: 120614)
+Mes: MM (ej: 06)
+
+TP2EJ5
+    valor, dia, mes, año: R
+INICIO
+    Escribir "Ingrese una fecha en formato DDMMAA: "
+
+    dia <- TRUNC(valor/10.000)
+    mes <- TRUNC((valor - dia*10.000)/100)
+    año <- valor MOD 100
+
+    Escribir "Fecha: ", valor
+    Escribir "Mes: ", mes
+FIN
+
+---------------------------------------------------------
+
+///////////////////////TP3////////////////////////////////
+
+Estructura General SI:
+
+SI <condición> ENTONCES
+    pasos necesarios para resolver
+SINO (opcional)
+    pasos necesarios para resolver
+FINSI
+
+    Condición: Es la comparación entre una variable y un valor o entre variables se pueden utilizar los siguientes signos: > (mayor), < (menor), >= (mayor igual), <=(menor igual), = (igual), <> (distinto) y las funciones Y, O.
+
+---------------------------------------------------------
+Resolver los siguientes ejercicios:
+(En todos los casos utilizar mensajes de entrada y salida adecuados)
+
+1) Dados dos números reales cualesquiera distinto de cero, imprimir la leyenda "Producto Positivo" si tienen el mismo signo o "producto negativo" si tienen distinto signo.
+
+TP3EJ1
+    valor1, valor2: R
+INICIO
+    Escribir "Ingrese dos valores: "
+    Leer valor1, valor2
+
+    Si (valor1*valor2 > 0) entonces
+        Escribir "Producto Positivo"
+    Sino
+        Si (valor1*valor2 = 0)
+            Escribir "Producto Nulo"
+        Sino
+            Escribir "Producto Negativo"
+        FinSi
+    FinSi
+FIN
+---------------------------------------------------------
+2) Dados dos números reales cualesquiera, imprimir la leyenda "Producto Positivo", "producto negativo" o "Producto nulo" según corresponda.
+
+Resuelto arriba^^
+---------------------------------------------------------
+3) Dados dos números reales, realizar un algoritmo que devuelva: La suma, la resta, el producto y el cociente si este es posible.
+
+TP3EJ3
+    valor1, valor2, suma, resta, producto, cociente: R
+INICIO
+    Escribir "Ingresar 2 valores: "
+    Leer valor1, valor2
+
+    suma <- valor1 + valor2
+    resta <- valor1 - valor2
+    producto <- valor1 * valor2
+
+    Si (valor2 = 0) entonces
+        Escribir "suma: ", suma
+        Escribir "resta: ", resta
+        Escribir "producto: ", producto
+        Escribir "cociente: N/A"
+    Sino
+        cociente <- valor1 / valor2
+
+        Escribir "suma: ", suma
+        Escribir "resta: ", resta
+        Escribir "producto: ", producto
+        Escribir "cociente: ", cociente
+    FinSi
+FIN     
+---------------------------------------------------------
+4) Escribir un programa que ingresando dos valores reales, informe si el primer valor ingresado es mayor o menor que el segundo valor ingresado.
+
+TP3EJ4
+    valor1, valor2: R
+INICIO
+    Escribir "Ingrese dos valores: "
+
+    Si (valor1 > valor2) entonces
+        Escribir valor1, " es mayor que ", valor2
+    Sino
+        Si (valor1 = valor2) entonces
+            Escribir "Son iguales"
+        Sino
+            Escribir valor2, " es mayor que ", valor1
+        FinSi
+    FinSi
+FIN
+---------------------------------------------------------
+5) Escribir un programa que ingresando dos valores reales, informe si el primer valor ingresado es mayor, menor o igual que el segundo valor ingresado.
+
+Resuelto arriba otra vez ¬_¬
+---------------------------------------------------------
+6) Realice un algoritmo que ingresando 2 valores reales los devuelva ordenados de menor a mayor.
+
+TP3EJ6
+    valor1, valor2: R
+INICIO
+    Escribir "Ingrese dos valores: "
+    Leer valor1, valor2
+
+    Si (valor1 < valor2) entonces
+        Escribir valor1, ", ", valor2
+    FinSi
+
+    Si (valor > valor2) o (valor1 = valor2) entonces
+        Escribir valor2, ", ", valor1
+    FinSi
+FIN
+
+---------------------------------------------------------
+7) Realice un algoritmo que ingresando 2 valores reales los devuelva ordenados de mayor a menor.
+
+Lo mismo que el anterior solo que los signos invertidos.
+---------------------------------------------------------
+8) Dada dos valores reales, realizar un programa que devuelva el mayor valor ingresado.
+
+TP3EJ8
+    valor1, valor2: R
+INICIO
+    Escribir "Ingrese dos valores: "
+    Leer valor1, valor2
+
+    Si (valor1 > valor2) entonces
+        Escribir "Mayor valor ingresado: ", valor1
+    FinSi
+
+    Si (valor1 < valor2) entonces
+        Escribir "Mayor: ", valor2
+    Sino
+        Escribir "Son iguales"
+    FinSi
+FIN
+---------------------------------------------------------
+9) Dada dos valores reales, realizar un programa que devuelva el menor valor ingresado.
+
+Igual que el anterior solo que se invierten los signos
+---------------------------------------------------------
+10) Dado un valor entero de dos cifras, realizar un algoritmo que devuelva el valor de cada uno de sus cifras ordenadas de mayor a menor.
+
+TP3EJ10
+    valor, decena, unidad: N
+INICIO
+    Escribir "Ingrese un valor: "
+    Leer valor
+
+    Si (99 < valor < 10) entonces
+        Escribir "Ingrese un numero valido"
+    Sino
+        decena <- TRUNC(valor/10)
+        unidad <- valor MOD 10
+
+        Si (decena >= unidad) entonces
+            Escribir decena, ", ", unidad
+        Sino
+            Escribir unidad, ", ", decena
+        FinSi
+    FinSi
+FIN
+
+---------------------------------------------------------
+11) Dado un valor entero de tres cifras, realizar un algoritmo que devuelva el valor de cada uno de sus cifras ordenadas de menor a mayor.
+
+TP3EJ11
+    valor, centena, decena, unidad: Z
+    mayor, medio, menor: Z
+INICIO
+    Escribir "Ingrese un valor de 3 cifras: "
+    Leer valor
+
+    SI (-999 > valor > -100) o (999 < valor < 100) ENTONCES
+        Escribir "Ingrese un numero valido"
+    SINO
+        centena <- TRUNC(valor/100)
+        decena <- TRUNC((valor MOD 100)/10)
+        unidad <- valor MOD 10
+
+        Si (centena >= decena) y (centena >= unidad) entonces
+            mayor <- centena
+            Si (decena >= unidad) entonces
+                medio <- decena
+                menor <- unidad
+            Sino
+                medio <- unidad
+                menor <- decena
+            FinSi
+        FinSi
+
+        Si (decena >= centena) y (decena >= unidad) entonces
+            mayor <- decena
+            Si (centena >= unidad) entonces
+                medio <- centena
+                menor <- unidad
+            Sino
+                medio <- unidad
+                menor <- centena
+            FinSi
+        FinSi
+
+        Si (unidad >= centena) y (unidad >= decena) entonces
+            mayor <- unidad
+            Si (centena >= decena) entonces
+                medio <- centena
+                menor <- decena
+            Sino
+                medio <- decena
+                menor <- centena
+            FinSi
+        FinSi
+    FINSI
+
+    Escribir menor, ", ", medio, ", ", mayor
+FIN
+
+---------------------------------------------------------
+12) Dado un valor entero de tres cifras, realizar un algoritmo que devuelva el un nuevo valor formado con sus tres cifras ordenadas de menor a mayor. (Ejemplo: Sin ingresa el numero 512, el programa debe devolver el numero 125). En la salida mostrar ambos valores.
+---------------------------------------------------------
+13) Dados dos números A y B dejar en A el mayor y en B el menor.
+---------------------------------------------------------
+14) Dados tres numero A, B y C ordenarlos de mayor a menor de modo que el mayor queda en A el menor queda en C y el restante en B. Imprimir A, B, C.
+---------------------------------------------------------
+15) Dados dos valores reales emitir la división del mayor por el menor.
+---------------------------------------------------------
+16) Dado el sueldo de una persona, si supera los 25000 emitir un mensaje que informe que se le descontara ganancias.
+---------------------------------------------------------
+17) Dado el nombre y la edad de una persona, el programa informa si es o no mayor de edad.
+---------------------------------------------------------
+18) En un almacén se hace un 20% de descuento a los clientes cuya compra supere los $10000, se ingresa el importe y se debe informar cual será la cantidad que pagara por su compra.
+---------------------------------------------------------
+19) Un obrero necesita calcular su salario semanal, el cual se obtiene de la siguiente manera: Si trabaja 40 horas o menos se le paga un salario de $16 por hora, si trabaja más de 40 horas se le paga un salario de $16 por cada una de las primeras 40 horas y un salario de $20 por cada hora extra.
+---------------------------------------------------------
+20) Se ingresa un número natural del 1 al 7, el programa devuelve el nombre del día de la semana al cual corresponde. (Ej: Si ingresa 1 debe devolver Lunes).
+---------------------------------------------------------
+
+///////////////////////TP4////////////////////////////////
+
+OPERADORES BASICOS: + - * /
+FUNCIONES: MOD (resto), TRUNC (parte entera), AZAR (números aleatorios)
+ESTRUCTURA CONDICIONAL: SI – SI Anidado - SEGUN
+
+Estructura Condicional SEGÚN:
+SEGÚN <Variable> HACER
+    <Opción 1>: pasos....
+    <Opción 2>: pasos....
+    <Opción 3>: pasos....
+    .
+    <Opción n>: pasos....
+En cualquier otro caso: pasos...
+FIN SEGUN
+
+    Nota: La variable debe ser del tipo Natural o Entero o Cadena de Caracteres de un solo carácter, las opciones surgen del enunciado. (Ver ejemplo dado en clase)
+---------------------------------------------------------
+1) Un club cobra de acuerdo a la siguiente tabla:
+Código / Categoría / Cuota:
+    I / Infantiles / $800
+    C / Cadetes / $1000
+    J / Juvenil / $1200
+    A / Adulto / $900
+Diseñar un algoritmo que solicite el código de la categoría e informe su nombre y el valor de la cuota.
+
+TP4EJ1
+    codigo: C[1]
+INICIO
+    Escribir "Ingrese el Código correspondiente a la Categoría para ver el costo actual de la cuota: "
+    Leer codigo
+
+    SEGUN <codigo> HACER
+        <Opcion I>: Escribir "Categoría Infantiles. Cuota: $800"
+        <Opcion C>: Escribir "Categoría Cadetes. Cuota: $1000"
+        <Opcion J>: Escribir "Categoría Juvenil. Cuota: $1200"
+        <Opcion A>: Escribir "Categoría Adulto. Cuota: $900"
+    En cualquier otro caso: Escribir "Código incorrecto"
+FIN
+---------------------------------------------------------
+2) Una empresa que transporta encomiendas, calcula el costo de cada una de ellas en base al tipo y destino de la misma. Partiendo de un básico de $300, los recargos que se aplican son los siguientes:
+
+Según el Tipo:
+S (Simple) 0%
+X (Expreso) 20%
+E (Especial) 40%
+Según el Destino:
+L (Local) 5%
+N (Exterior) 20%
+
+Diseñar un algoritmo que solicite el tipo y destino de la encomienda y devuelva el costo.
+
+TP4EJ2
+    tipo, destino: C[1]
+    basico, preciofinal: R
+INICIO
+    basico <- 300
+
+    Escribir "Ingrese el codigo del tipo de encomienda (S, X, E): "
+    Leer tipo
+    Escribir "Ingrese el codigo del tipo de destino (L, N): "
+    Leer tipo
+
+    SEGUN tipo HACER
+        Opcion S: preciofinal <- basico
+        Opcion X: preciofinal <- basico + ((basico*20)/100)
+        Opcion E: preciofinal <- basico + ((basico*40)/100)
+    En cualquier otro caso: Escribir "El codigo de tipo de encomienda es incorrecto"
+    FINSEGUN
+
+    SEGUN destino HACER
+        Opcion L: preciofinal <- preciofinal + ((basico*5)/100)
+        Opcion N: preciofinal <- preciofinal + ((basico*20)/100)
+    En cualquier otro caso: Escribir "El codigo de tipo de destino es incorrecto"
+    FINSEGUN
+
+    Escribir "Costo con recargos: ", preciofinal
+FIN
+
+---------------------------------------------------------
+3) En Trilobite SA el sueldo de una persona se calcula de la siguiente forma:
+
+Sueldo Neto = Remuneraciones – Descuentos
+
+Sabiendo que:
+Remuneraciones = Sueldo Básico + Antigüedad + Presentismo
+Descuentos = Jubilación + Obra social
+La antigüedad se calcula de acuerdo a la siguiente tabla:
+
+Código / Antigüedad / %
+1 / Menos de un año / 0%
+2 / Desde 1 a 3 años / 10%
+3 / Desde 3 a 5 años / 15%
+4 / 5 años o mas / 20%
+El Presentismo, si corresponde, es el 10% del sueldo básico.
+La jubilación es el 13% de la Remuneraciones.
+La Obra Social es el 3% de las Remuneraciones.
+
+Diseñar un algoritmo que solicite el sueldo básico, si corresponde o no el presentismo (V o F) y el código de antigüedad e informe el total de remuneraciones, el total de descuentos y el sueldo neto del empleado.
+
+TP4EJ3
+    remuneraciones, sueldobasico, antiguedad, presentismo, descuentos, sueldoneto: R
+    codantiguedad, codpresentismo: N
+INICIO
+    Escribir "Ingrese sueldo basico: "
+    Escribir "Ingrese cod de antiguedad: "
+    Escribir "Ingrese si corresponde Presentismo (0 para Si, 1 para No): "
+    Leer sueldobasico, codantiguedad, codpresentismo
+
+    SEGUN codantiguedad HACER
+        Opcion 1: antiguedad <- 0
+        Opcion 2: antiguedad <- (sueldobasico*10)/100
+        Opcion 3: antiguedad <- (sueldobasico*15)/100
+        Opcion 4: antiguedad <- (sueldobasico*20)/100
+    En cualquier otro caso: Escribir "Cod de antiguedad incorrecto"
+    FINSEGUN
+
+    SEGUN codpresentismo HACER
+        Opcion 0: presentismo <- (sueldobasico*10)/100
+        Opcion 1: presentismo <- 0
+    En cualquier otro caso: Escribir "Cod de presentismo incorrecto"
+    FINSEGUN
+
+    remuneraciones <- sueldobasico + antiguedad + presentismo
+    descuentos <- ((remuneraciones*13)/100) + ((remuneraciones*3)/100)
+    sueldoneto <- remuneraciones - descuentos
+
+    Escribir "Total Remuneraciones: $", remuneraciones
+    Escribir "Total Descuentos: $", descuentos
+    Escribir "Sueldo Neto: $", sueldoneto
+FIN
+
+---------------------------------------------------------
+4) Se ingresa una fecha con el formato día, mes, año (dos dígitos c/u), realizar un programa que
+devuelva la fecha ingresada con un nuevo formato. Por ejemplo si se ingresa 31 07 17, el programa
+debe devolver 31 de julio de 2017.
+
+---------------------------------------------------------
+5) Realizar un programa que permita elegir al usuario el cálculo del perímetro y/o superficie de por lo
+menos 5 figuras geométricas.
+
+---------------------------------------------------------
+6) En una tienda de descuento se efectúa una promoción en la cual se hace un descuento sobre
+el valor de la compra total según el color de la bolita que el cliente saque al pagar en caja.
+Si la bolita es de color blanco no se le hará descuento alguno, si es verde se le hará un 10%
+de descuento, si es amarilla un 25%, si es azul un 50% y si es roja un 100%. Determinar la
+cantidad final que el cliente deberá pagar por su compra se sabe que solo hay bolitas de los
+colores mencionados.
+
+---------------------------------------------------------
+7) En un juego de preguntas a las que se responde Si o No gana quien responda correctamente
+las tres preguntas. Si se responde mal a cualquiera de ellas ya no se pregunta la siguiente y
+termina el juego. Las preguntas son:
+ ¿Colon descubrió América?
+ ¿La independencia de México fue en el año 1810?
+ ¿The Doors fue un grupo de rock Americano?
+
+---------------------------------------------------------
+7) En un supermercado se hace una promoción, mediante la cual el cliente obtiene un
+descuento dependiendo de un número que se escoge al azar. Si el número escogido es
+menor que 74 el descuento es del 15% sobre el total de la compra, si es mayor o igual a 74
+el descuento es del 20%. Obtener cuánto dinero se le descuenta.
+
+---------------------------------------------------------
+8) Calcular el número de pulsaciones que debe tener una persona por cada 10 segundos de
+ejercicio aeróbico; la fórmula que se aplica cuando el sexo es femenino
+es: num_pulsaciones = (220 − edad)/10 y si el sexo es masculino: num_pulsaciones =
+(210 − edad)/10.
+
+---------------------------------------------------------
+9) Se ingresa nombre, apellido y promedio de los 3 alumnos de un curso con el promedio más
+alto obtenido. Mostar el abanderado, primer escolta y segundo escolta.
+
+---------------------------------------------------------
+10) Ingresar un numero entero entre 0 y 9. Luego mostrar en ingles el valor ingresado. Si se
+ingresa un valor fuera de dicho rango, mostrar un mensaje indicando la situación.
+
+---------------------------------------------------------
+11) Un estudiante necesita calcular el valor del área de una figura geométrica. Las figuras geométricas
+disponibles son el triángulo, circulo, rectángulo y un hexágono.
+
+---------------------------------------------------------
+12) Ayude a un estudiante de electrónica básica a determinar el resultado de la compuerta lógica
+AND y una NOR. Los valores lógicos que requiere ingresarse o mostrarse son las letras (v , f ) o sus
+mayúsculas. Si usuario se equivoca al brindar entradas, el algoritmo le informa el error
+apropiadamente y finaliza.
+
+---------------------------------------------------------
+13) B. Permita calcular el total a pagar por la compra de N camisas. Si se compran entre 1 a 4 camisas
+se aplica un descuento del 12.5%, si se compra una cantidad comprendida entre 5 y 8 camisas se
+aplica un descuento del 20% y si se compran cantidades mayores, se aplica un descuento del
+31.5% sobre el total de la compra. Debe imprimirse en pantalla la compra final sin descuento,
+monto del descuento y la compra con descuento.
+
+---------------------------------------------------------
+14) Solicite un numero entero a usuario, solamente entre 1 a 10. Luego, retorne un mensaje que
+indique si es primo. Si no es primo, justificarlo apropiadamente.
+
+---------------------------------------------------------
+15) Solicite al usuario el valor de la hora actual, en horas, minutos y segundos; así como, si es antes
+meridiano (am) o después meridiano (pm). Luego, mostrarle la hora que sería después de
+transcurrir 10 segundos exactamente. Observe algunos ejemplos de horas ingresadas y su
+correspondiente valor luego de transcurrir los 10 segundos. Hora ingresada Hora (luego de 10
+segundos) 4 am.: 8 min.: 25 seg. 4 am.: 8 min.: 35 seg. 5 pm.: 45 min.: 57 seg. 5 pm.: 46 min.: 7
+seg. 11 pm.: 59 min.: 52 seg. 12 am.: 0 min.: 2 seg. 7 am.: 59 min.: 54 seg. 8 am..: 0 min.: 4 seg. 11
+
+---------------------------------------------------------
+16) Solicite los parámetros necesarios para resolver una ecuación de 2do grado por medio de la
+”ecuación cuadrática general”. El algoritmo retornara las soluciones reales (x1 y x2). En caso que
+la ecuación no tenga solución, debe justificar el motivo que no permite resolverla. Pruebe su
+solución con las siguientes ecuaciones: 2X 2 − 5X − 3 = 0 0X 2 + 2X − 1 = 0 1X 2 + X + 1 = 0
+
+---------------------------------------------------------
+17) Elabore un conversor de medidas de longitud. El usuario podrá elegir entre las siguientes
+unidades de medida: a) Metros b) Pies c) Centimetros d) Pulgadas
+
+---------------------------------------------------------
+18) Realizar un programa que convierta un numero natural en número romano.
+
+---------------------------------------------------------
+19) En un circuito eléctrico hay tres interruptores, los cuales pueden estar en estado cerrado(1)
+o abierto(0).
+
+---------------------------------------------------------
+20) Para que un equipo funcione, se requiere que al menos dos estén cerrados. Si los datos son
+el estado de los interruptores, determine si el equipo funcionará.
+
+---------------------------------------------------------
+21) Ingrese tres números correspondientes a un conjunto y tres números correspondientes a
+otro conjunto. Muestre los números que corresponden a la intersección de los dos
+conjuntos.
+
+---------------------------------------------------------
+22) Lea los valores de los lados de un triángulo. Determine y muestre un mensaje
+correspondiente a su tipo (1. EQUILÁTERO, 2. ISÓSCELES, O 3. ESCALENO)
+
+---------------------------------------------------------

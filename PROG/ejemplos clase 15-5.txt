@@ -1,0 +1,158 @@
+#include <stdio.h>
+#define PI 3.14
+
+
+int main(){
+    float radio,area;
+
+    printf("Bienvenido al programa que....\n");
+    do{
+        printf("Ingrese el radio:\n");
+        scanf("%f",&radio);
+        if(radio<=0){
+            printf("Error radio invalido\n");
+        }
+    }while(radio<=0);
+
+    area=radio*radio*PI;
+    printf("El area de la circunferencia cuyo radio es: %.2f vale: %.2f",radio,area);
+
+    return 0;
+}
+
+-----------------------------------------------------------------------
+#include <stdio.h>
+#include <math.h>
+#define PI 3.14
+#define CUAD(x) (x*x)
+
+int main(){
+    float radio,area;
+    printf("Bienvenido al programa que....\n");
+    do{
+        printf("Ingrese el radio:\n");
+        scanf("%f",&radio);
+        if(radio<=0){
+            printf("Error radio invalido\n");
+        }
+    }while(radio<=0);
+   // area=pow(radio,2)*PI
+    area=CUAD(radio)*PI;
+    printf("El area de la circunferencia cuyo radio es: %.2f vale: %.2f",radio,area);
+   
+    return 0;
+}
+
+
+----------------------------------------------------------------------
+Con repetición continua hasta querer salir con 0
+
+#include <stdio.h>
+#include <math.h>
+#define PI 3.14
+#define CUAD(x) (x*x)
+
+int main(){
+    float radio,area;
+    printf("Bienvenido al programa que....\n");
+    do{
+        printf("Ingrese el radio (positivo para calcular o cero para salir):\n");
+        scanf("%f",&radio);
+        while(radio<0){
+            printf("Error radio invalido por favor ingreselo nuevamente\n");
+            scanf("%f",&radio);
+        }
+        if(radio!=0){
+            area=CUAD(radio)*PI;
+            printf("El area de la circunferencia cuyo radio es: %.2f vale: %.2f\n",radio,area);
+        }
+    }while(radio!=0);
+   
+    // area=pow(radio,2)*PI;
+   
+    return 0;
+}
+
+
+--------------------------------------------------------------------------
+
+#include <stdio.h>
+#define SALIR 0
+
+int main(){
+    int valor,mayor,menor;
+    printf("Ingrese un valor (0 para salir)\n");
+    scanf("%d",&valor);
+    if(valor!=SALIR){
+        mayor=valor;
+        menor=valor;
+        do{
+            printf("Ingrese un valor (0 para salir)\n");
+            scanf("%d",&valor);
+            if(valor!=SALIR){
+                if(valor>mayor)mayor=valor;
+                if(valor<menor)menor=valor;
+            }
+        }while(valor!=SALIR);
+        if(mayor==menor){
+            printf("Los valores son iguales y valen %d",mayor);
+        }else{
+            printf("El mayor valor ingresado fue: %d\n",mayor);
+            printf("El menor valor ingresado fue: %d\n",menor);
+        }
+    }
+    return 0;
+}
+---------------------------------------------------------------------------------
+
+#include <stdio.h>
+#define SEGUNDOS_EN_UNA_HORA 3600
+#define MINUTOS_EN_UNA_HORA 60
+#define MAXIMO 86400
+
+int main (){
+
+    int Segundos_Totales, Hora, Min, Seg_Restantes, Aux,Control;
+
+    printf("Bienvenido al programa\n");
+    do {
+        printf("Ingrese los segundos que quiera pasar a horas\n");
+        scanf("%d", &Segundos_Totales);
+
+        while (Segundos_Totales <=0 || Segundos_Totales > MAXIMO) {
+            printf("No es un valor valido, por favor ingreselo nuevamente\n");
+            scanf("%d", &Segundos_Totales);
+        }
+
+        Hora= (Segundos_Totales/SEGUNDOS_EN_UNA_HORA);
+        Aux=(Segundos_Totales % SEGUNDOS_EN_UNA_HORA);
+        Min=(Aux / MINUTOS_EN_UNA_HORA);
+
+        Seg_Restantes= (Aux % MINUTOS_EN_UNA_HORA);
+        printf("La cantidad de horas es: %d\n", Hora);
+        printf("La cantidad de minutos  es: %d\n", Min);
+        printf("La cantidad de segundos es: %d\n", Seg_Restantes);
+        printf("Ingrese 0 para salir 1 para continuar\n");
+        scanf("%d",&Control);
+	} while (Control !=0);
+
+    return 0;
+}
+
+
+--------------------------------------------------------------------------------
+#include <stdio.h>
+
+void funcion(int val);
+
+int main(){
+    int val=10;
+    funcion(val);
+    printf("%d\n",val);
+    return 0;
+}
+
+void funcion(int val){
+    val=val+1;
+    printf("%d\n",val);
+}

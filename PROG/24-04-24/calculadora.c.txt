@@ -1,0 +1,45 @@
+#include <stdio.h>
+#define SUMAR '+'
+#define RESTAR '-'
+#define MULTIPLICAR '*'
+#define DIVIDIR '/'
+
+int main() {
+    float num1, num2, resultado;
+    char operacion;
+
+    printf("Calculadora\n");
+    printf("Con este programa puede realizar las cuatro operaciones aritmeticas basicas\n");
+    printf("A continuacion debe ingresar dos numeros y la operacion que desea realizar\n");
+
+    printf("Primer numero:\n");
+    scanf("%f",&num1);
+    printf("Segundo numero:\n");
+    scanf("%f",&num2);
+    printf("Operacion:\n");
+    printf("\t+ para sumar\n");
+    printf("\t- para restar\n");
+    printf("\t* para multiplicar\n");
+    printf("\t/ para dividir\n");
+    fflush(stdin);
+    scanf("%c",&operacion);
+
+    switch (operacion){
+        case SUMAR:
+         resultado=num1+num2;
+         break;
+        case RESTAR:
+         resultado=num1-num2;
+         break;
+        case MULTIPLICAR:
+         resultado=num1*num2;
+         break;
+        case DIVIDIR:
+         if(num2!=0){resultado=num1/num2;}else{printf("No se puede dividir por cero.\n");}
+         break;
+        default: printf("Operacion Invalida.\n");
+         break;
+    }
+
+    printf("El resultado es: %f", resultado);
+}

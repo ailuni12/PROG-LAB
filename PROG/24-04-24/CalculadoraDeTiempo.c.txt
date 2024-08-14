@@ -1,0 +1,26 @@
+/*28. Dada una cantidad entera de segundos (menor a 86400) y conviértela en horas, minutos y segundo
+utilizando los operadores de cociente y resto enteros*/
+#include <stdio.h>
+
+int main() {
+    int segundos,horas,minutos;
+
+    printf("Calculadora de Tiempo\n");
+    printf("Por favor ingrese una cantidad de segundos que no sea mayor a 86400:");
+    scanf("%d",&segundos);
+    if (segundos >= 86400 || segundos < 0){
+        printf("El numero ingresado no es valido. Por favor ingreselo nuevamente");
+    }else{
+        horas=segundos/3600; //numeros magicos: numeros sueltos en el codigo, evitarlos en lo mayor posible
+        minutos=(segundos%3600)/60;
+        segundos=segundos%60;
+
+        printf("El numero ingresado equivale a: %d", horas);
+        if (horas == 1) {printf(" hora");}else{printf(" horas");};
+        printf(", %d", minutos);
+        if (minutos == 1) {printf(" minuto");}else{printf(" minutos");};
+        printf(" y %d", segundos);
+        if (segundos == 1) {printf(" segundo");}else{printf(" segundos");};
+    }
+    return 0;
+}

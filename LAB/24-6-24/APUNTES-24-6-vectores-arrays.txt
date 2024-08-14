@@ -1,0 +1,17 @@
+VECTORES (ARRAYS)
+
+Un array es una matriz unidimensional (como la primera columna de un excel; un archivo de excel es una matriz bidimensional)
+
+---------------------
+
+ALGORITMO EJERCICIOS_VECTORES_01
+
+DEFINIR i COMO ENTERO
+
+DEFINIR vec COMO ENTERO
+DIMENSION vec[10]
+//los vectores se definen en dos partes: primero nombre y luego dimension
+
+INICIO
+	PARA i<-0 HASTA (10-1) CON PASO 1 HACER
+	

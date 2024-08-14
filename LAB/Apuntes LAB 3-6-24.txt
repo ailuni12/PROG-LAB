@@ -1,0 +1,27 @@
+PSEINT
+
+Ciclos Iterativos
+
+Tipos:
+- Exactos:
+	- "Para" (PSint): Va desde un COMIENZO a un FIN
+- Inexactos o No Exactos:
+	- "Mientras" (Tiene que cumplirse la condicion (ser True))
+	- "Hacer Mientras" (Al menos se ejecuta una vez)
+
+//Ingreso de numeros en un ciclo repetitivo
+
+Flujo de un programa:
+
+ Algoritmo Ejercicio 1 (Inicio del Programa)
+	Definir TOPE, i como entero (Ambiente de dato, declaracion de variables)
+	
+	INGRESAR DATOS
+	Es necesario inicializar las variables? Por ejemplo contadores,
+	donde siempre aparece un numero (c=c+1)
+
+	PROCESAR DATOS
+
+	INFORMAR RESULTADOS
+
+	FIN
