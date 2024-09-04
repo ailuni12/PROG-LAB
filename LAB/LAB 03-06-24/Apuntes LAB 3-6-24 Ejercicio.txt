@@ -1,0 +1,4 @@
+1) Hacer un programa que dado un lote de numeros que se pide por teclado al usuario pueda determinar cuantos de ellos son primos y cuales no. determinar tambien cuantos primos encontro y que porcentaje de primos hubo en ese lote.
+
+2) Dado un lote de 9 valores, esos valores deben estar comprendidos entre 1 y 10 por lo cual al ingresar por teclado los mismos se deberan validar
+Se necesita que cada tres ingresos calcule su promedio, por ultimo determine el promedio general de los promedios calculados.

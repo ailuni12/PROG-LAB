@@ -1,0 +1,42 @@
+
+struct puntos {
+    int coordX;
+    int coordY;
+    char nombre[MAX_CHAR];
+    int dist;
+    int color;
+    char simbolo;
+}p1={10,40,"punto1",3,6,'x'},p2;
+
+int main (void){
+    if(p1.nombre=="Nombre"){
+        //no se puede hacer esto,
+        //c no puede comparar entre strings.
+    }
+
+    return 0;
+}
+
+//////////////////////////////////////////////
+
+esto es valido, es una estructura anonima.
+(no hace falta declarar el nombre al principio
+si no es necesario)
+
+struct {
+    int coordX;
+    int coordY;
+    char nombre[MAX_CHAR];
+    int dist;
+    int color;
+    char simbolo;
+}p1={10,40,"punto1",3,6,'x'},p2;
+
+///////////////////////////////////////////////
+
+Investigar:
+Uniones
+Campos de Bits
+
+//////////////////////////////////////////////
+

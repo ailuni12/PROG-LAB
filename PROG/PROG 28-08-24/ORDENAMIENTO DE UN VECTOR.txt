@@ -1,0 +1,27 @@
+void ordenar(int x[],int y)		
+{		
+	// y posse laa cantidad de valores a Ordenar
+    int i,cota=y-1,k=1,aux;	// k es una bandera, que me indica que se termino de ordenar
+	while(k)	
+	{	
+	        k=0;	// partimos del supuesto que esta ordenado
+	        for(i=0;i<cota;i++)	
+	        {	
+	            if(x[i]>x[i+1])	
+	            {	
+	                // aqui se produce el swap
+                    aux=x[i];	
+	                x[i]=x[i+1];	
+	                x[i+1]=aux;	
+	                k=i;	// aqui k toma el valor donde fue ordenado por ultima vez
+	            }	
+	       }	
+	cota=k;	// aqui se lo pasa a cota, con lo cual lo limita en las iteracioners
+	}	
+}	
+void pausa(void)
+{
+    printf("\nPresione Enter para continuar...");
+    fflush(stdin);
+    getchar();
+}

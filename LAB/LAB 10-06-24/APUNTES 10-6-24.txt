@@ -1,0 +1,29 @@
+Calcular el Area de un Circulo
+Area = PI*radio^2
+
+ALGORITMO Areadeuncirculo
+ DEFINIR radio, area COMO REAL
+ ESCRIBIR "Ingrese el radio del circulo:"
+ LEER radio
+
+ area=calculoAreaCirculo(radio)
+
+ ESCRIBIR "El area del circulo es igual a ", area
+FINALGORITMO
+
+definir la funcion:
+FUNCION a = CalculoAreaCirculo(r)
+ a = PI*r*r
+FINFUNCION
+
+---------------------------------------------------
+
+		resultado <- num*(num-1)
+		num  <- num-1
+
+-----------------------------------------------------
+
+Tratar de hacer validaciones con MIENTRAS QUE
+
+----------------------------------------------------
+
