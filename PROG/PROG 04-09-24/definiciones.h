@@ -23,7 +23,7 @@ typedef struct{
 }cliente_t;
 
 void pausa(void);
-int menu(void);
+opcion_t menu(void);
 void cargarCliente(cliente_t[], int *);
 void mostrarCliente(cliente_t[], int); 
 void ordenarClientesPorCodigo(cliente_t[], int);
