@@ -45,7 +45,7 @@ int main(void){
 
 void pausa(void){
     printf("Presione Enter para continuar: ");
-    fflush(stdin); // aqui si va porque puede quedar el /n
+    fflush(stdin);
     getchar();
 }
 
@@ -54,12 +54,12 @@ opcion_t menu(void){
     
     do{
         printf("\nMENU DE OPCIONES DE CLIENTES\n");
-        printf("\n\tIngresar Datos <1>\n");
-        printf("\n\tBuscar un cliente <2>\n");
-        printf("\n\tListado de Cliente Ordenado por Codigo <3>\n");
-        printf("\n\tListado de Clientes Ordenado Por Apellido <4>\n");
-        printf("\n\tSalir <5>\n");
-        printf("\nIngrese Opcion [1-5]: ");
+        printf("\tIngresar Datos <1>\n");
+        printf("\tBuscar un cliente <2>\n");
+        printf("\tListado de Cliente Ordenado por Codigo <3>\n");
+        printf("\tListado de Clientes Ordenado Por Apellido <4>\n");
+        printf("\tSalir <5>\n");
+        printf("Ingrese Opcion [1-5]: ");
         scanf("%d", &op);
     } while (op < INGRESAR || op > SALIR);
     
@@ -70,37 +70,70 @@ void cargarCliente(cliente_t clientes[]){
     int finalizar=FALSE;
     int i=0;
     uint16_t codigo=0;
-    char nombre[50];
-    char apellido[50];
+    fecha_t dob;
+    char nombre[MAX_CHAR];
+    char apellido[MAX_CHAR];
 
-    printf("Datos de cliente nuevo (por favor ingrese unicamente datos validos)\nIngrese 0 al final para completar la carga\n");
+
+    printf("Datos de cliente nuevo (por favor ingrese unicamente datos validos)\n");
 
     do{
-        printf("Ingrese 3 digitos [xxx] distintos de 0 para el ID de Cliente\n");
+        printf("Puede ingresar hasta 3 digitos del 1 al 999 para el ID de Cliente\n");
         printf("ID: ");
         scanf("%d",&codigo);
+        //el ampersand siempre para int y float (puntero)
 
-        while (codigo>999 || codigo<000){
+        while (codigo>999 || codigo<1){
             printf("Debe ingresar un numero valido, intente nuevamente:\n");
             printf("ID: ");
             scanf("%d",&codigo);
         }
         clientes[i].codigo=codigo;
 
-        printf("Ingresar el Nombre del Cliente: ");
-        scanf("%s",&nombre[0]);
+        printf("Ingrese el Nombre: ");
+        scanf("%49s",nombre);
+        //no incluye el ampersand porque char nombre ya se comporta
+        //como un puntero, que indica la primera letra del string
+        strcpy(clientes[i].nombre,nombre);
+
+        printf("Ingrese el Apellido: ");
+        scanf("%49s",apellido);
+        //%49s - previene buffer overload.
+        //no importa la cantidad de caracteres que
+        //ingrese el usuario, va a parar de leerlos
+        //en 49, dejando el espacio 50 para el \0
+        strcpy(clientes[i].apellido,apellido);
+        //strcpy es una funcion que copia strings
+
+        printf("Ingrese la Fecha de Nacimiento:\n");
+        printf("Dia: ");
+        scanf("%d",&dob.dia);
+        clientes[i].fechaNacimiento.dia=dob.dia;
+        printf("Mes: ");
+        scanf("%d",&dob.mes);
+        clientes[i].fechaNacimiento.mes=dob.mes;
+        printf("Anio: ");
+        scanf("%d",&dob.anio);
+        clientes[i].fechaNacimiento.anio=dob.anio;
 
         printf("Datos Ingresados:\n");
         printf("Codigo: %d\n",clientes[i].codigo);
-        printf("Nombre: %s\n",nombre);
+        printf("Nombre Completo: %s %s\n",clientes[i].nombre,clientes[i].apellido);
+        printf("Fecha de Nacimiento: %d/%d/%d\n",clientes[i].fechaNacimiento.dia,clientes[i].fechaNacimiento.mes,clientes[i].fechaNacimiento.anio);
 
         i++;
 
-        printf("Finalizar la carga? (0 FIN - 1 CONTINUAR): ");
+        printf("Finalizar la carga? (1 FIN - 0 CONTINUAR): ");
         scanf("%d",&finalizar);
     }while(finalizar!=TRUE);
 
-    printf("\nEl perfil de cliente se creo correctamente.\n");
+    if(i<=1){
+        printf("\nEl perfil de cliente se creo correctamente.\n");
+    }else if(i>1){
+        printf("\nSe crearon %d perfiles de cliente correctamente.\n",i++);
+    }else{
+        printf("\nOcurrio un error.\n");
+    }
 }
 
 void mostrarCliente(cliente_t clientes[], int indice){

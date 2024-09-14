@@ -1,8 +1,8 @@
 #define MAX_CLI 3
 #define MAX_CHAR 50
 
-#define TRUE 0
-#define FALSE 1
+#define TRUE 1
+#define FALSE 0
 
 typedef enum{
     INGRESAR=1,
