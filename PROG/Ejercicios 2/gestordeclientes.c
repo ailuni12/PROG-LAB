@@ -8,7 +8,7 @@ int main(void){
     opcion_t opcion;
     cliente_t clientes[MAX_CLI];
     int cantidadClientes=0;
-    int codigo=0;
+    int indice=0;
 
     printf("\n-------------------------\nBASE DE DATOS DE CLIENTES\n-------------------------\n");
     printf("Con este gestor puede crear un perfil de cliente, buscar clientes por su codigo, o tambien visualizar la lista completa ordenada por codigo o apellidos.\n");
@@ -18,12 +18,15 @@ int main(void){
         opcion=menu();
         switch (opcion){
             case INGRESAR:
-                cargarCliente(clientes);
+                cargarCliente(clientes,&cantidadClientes);
                 break;
             case BUSCAR:
-                //pedir codigo de cliente ()
-                buscarCliente(clientes,codigo);
-                mostrarClientePorCodigo(clientes,codigo);
+                //pedir codigo de cliente y devolver el indice
+                indice=buscarCliente(clientes,&cantidadClientes);
+                
+                if(indice!=NOT_FOUND){
+                    mostrarCliente(clientes,indice);
+                }
                 break;
             case LIST_CODIGOS:
                 ordenarClientesPorCodigo(clientes,cantidadClientes);
@@ -66,9 +69,9 @@ opcion_t menu(void){
     return op;
 }
 
-void cargarCliente(cliente_t clientes[]){
+void cargarCliente(cliente_t *ptrtoclientes, int *ptrtocantidad){
     int finalizar=FALSE;
-    int i=0;
+    int i=*ptrtocantidad;
     uint16_t codigo=0;
     fecha_t dob;
     char nombre[MAX_CHAR];
@@ -88,13 +91,13 @@ void cargarCliente(cliente_t clientes[]){
             printf("ID: ");
             scanf("%d",&codigo);
         }
-        clientes[i].codigo=codigo;
+        ptrtoclientes[i].codigo=codigo;
 
         printf("Ingrese el Nombre: ");
         scanf("%49s",nombre);
         //no incluye el ampersand porque char nombre ya se comporta
         //como un puntero, que indica la primera letra del string
-        strcpy(clientes[i].nombre,nombre);
+        strcpy(ptrtoclientes[i].nombre,nombre);
 
         printf("Ingrese el Apellido: ");
         scanf("%49s",apellido);
@@ -102,24 +105,24 @@ void cargarCliente(cliente_t clientes[]){
         //no importa la cantidad de caracteres que
         //ingrese el usuario, va a parar de leerlos
         //en 49, dejando el espacio 50 para el \0
-        strcpy(clientes[i].apellido,apellido);
+        strcpy(ptrtoclientes[i].apellido,apellido);
         //strcpy es una funcion que copia strings
 
         printf("Ingrese la Fecha de Nacimiento:\n");
         printf("Dia: ");
         scanf("%d",&dob.dia);
-        clientes[i].fechaNacimiento.dia=dob.dia;
+        ptrtoclientes[i].fechaNacimiento.dia=dob.dia;
         printf("Mes: ");
         scanf("%d",&dob.mes);
-        clientes[i].fechaNacimiento.mes=dob.mes;
+        ptrtoclientes[i].fechaNacimiento.mes=dob.mes;
         printf("Anio: ");
         scanf("%d",&dob.anio);
-        clientes[i].fechaNacimiento.anio=dob.anio;
+        ptrtoclientes[i].fechaNacimiento.anio=dob.anio;
 
         printf("Datos Ingresados:\n");
-        printf("Codigo: %d\n",clientes[i].codigo);
-        printf("Nombre Completo: %s %s\n",clientes[i].nombre,clientes[i].apellido);
-        printf("Fecha de Nacimiento: %d/%d/%d\n",clientes[i].fechaNacimiento.dia,clientes[i].fechaNacimiento.mes,clientes[i].fechaNacimiento.anio);
+        printf("Codigo: %d\n",ptrtoclientes[i].codigo);
+        printf("Nombre Completo: %s %s\n",ptrtoclientes[i].nombre,ptrtoclientes[i].apellido);
+        printf("Fecha de Nacimiento: %d/%d/%d\n",ptrtoclientes[i].fechaNacimiento.dia,ptrtoclientes[i].fechaNacimiento.mes,ptrtoclientes[i].fechaNacimiento.anio);
 
         i++;
 
@@ -127,26 +130,51 @@ void cargarCliente(cliente_t clientes[]){
         scanf("%d",&finalizar);
     }while(finalizar!=TRUE);
 
-    if(i<=1){
+    *ptrtocantidad=i;
+
+    if(*ptrtocantidad<=1){
         printf("\nEl perfil de cliente se creo correctamente.\n");
-    }else if(i>1){
-        printf("\nSe crearon %d perfiles de cliente correctamente.\n",i++);
+    }else if(*ptrtocantidad>1){
+        printf("\nSe crearon %d perfiles de cliente correctamente.\n",*ptrtocantidad);
     }else{
         printf("\nOcurrio un error.\n");
     }
+
+    printf("\nTotal de clientes registrados: %d\n",*ptrtocantidad);
 }
 
-void mostrarCliente(cliente_t clientes[], int indice){
+int buscarCliente(cliente_t clientes[], int *ptrtoCantidad){
+    int codigo=0;
+    int target=NOT_FOUND;
+    int i=0;
+
+    printf("\nIngrese el codigo del cliente: ");
+    scanf("%d",&codigo);
+
+    for(i=0;i<*ptrtoCantidad;i++){
+        if(clientes[i].codigo==codigo){
+            target=i;
+        }
+    }
+
+    if(target==NOT_FOUND){
+        printf("\nNo se encontro un cliente con ese codigo.");
+    }
+
+    return target;
+}
+
+void mostrarCliente(cliente_t *ptrclientes, int indice){
+    printf("Datos del cliente:\n");
+    printf("Codigo: %d\n",ptrclientes[indice].codigo);
+    printf("Nombre Completo: %s %s\n",ptrclientes[indice].nombre,ptrclientes[indice].apellido);
+    printf("Fecha de Nacimiento: %d/%d/%d\n",ptrclientes[indice].fechaNacimiento.dia,ptrclientes[indice].fechaNacimiento.mes,ptrclientes[indice].fechaNacimiento.anio);
+
+    pausa();
 }
 
 void ordenarClientesPorCodigo(cliente_t clientes[], int codigo){
 }
 
 void ordenarClientesPorApellido(cliente_t clientes[], int clientesCargados){
-}
-
-void mostrarClientePorCodigo(cliente_t clientes[], int codigo){
-}
-
-int buscarCliente(cliente_t clientes[], int codigo){
 }

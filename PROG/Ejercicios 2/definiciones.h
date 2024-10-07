@@ -1,8 +1,9 @@
-#define MAX_CLI 3
+#define MAX_CLI 5
 #define MAX_CHAR 50
 
 #define TRUE 1
 #define FALSE 0
+#define NOT_FOUND -1
 
 typedef enum{
     INGRESAR=1,
@@ -27,9 +28,8 @@ typedef struct{
 
 void pausa(void);
 opcion_t menu(void);
-void cargarCliente(cliente_t[]);
-void mostrarCliente(cliente_t[], int); 
+void cargarCliente(cliente_t *,int *);
+int buscarCliente(cliente_t[], int *);
+void mostrarCliente(cliente_t *, int); 
 void ordenarClientesPorCodigo(cliente_t[], int);
 void ordenarClientesPorApellido(cliente_t[], int);
-void mostrarClientePorCodigo(cliente_t[], int);
-int buscarCliente(cliente_t[], int);
