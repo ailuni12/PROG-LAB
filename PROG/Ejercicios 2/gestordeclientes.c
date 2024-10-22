@@ -55,27 +55,23 @@ void pausa(void){
 opcion_t menu(void){
     int op;
     
-    do{
-        printf("\nMENU DE OPCIONES DE CLIENTES\n");
-        printf("\tIngresar Datos <1>\n");
-        printf("\tBuscar un cliente <2>\n");
-        printf("\tListado de Cliente Ordenado por Codigo <3>\n");
-        printf("\tListado de Clientes Ordenado Por Apellido <4>\n");
-        printf("\tSalir <5>\n");
-        printf("Ingrese Opcion [1-5]: ");
-        scanf("%d", &op);
-    } while (op < INGRESAR || op > SALIR);
+    printf("\nMENU DE OPCIONES DE CLIENTES\n");
+    printf("\tIngresar Datos <1>\n");
+    printf("\tBuscar un cliente <2>\n");
+    printf("\tListado de Cliente Ordenado por Codigo <3>\n");
+    printf("\tListado de Clientes Ordenado Por Apellido <4>\n");
+    printf("\tSalir <5>\n");
+    printf("Ingrese Opcion [1-5]: ");
+    scanf("%d", &op);
     
     return op;
 }
 
-void cargarCliente(cliente_t *ptrtoclientes, int *ptrtocantidad){
+void cargarCliente(cliente_t ptrtoclientes[], int *ptrtocantidad){
     int finalizar=FALSE;
     int i=*ptrtocantidad;
     uint16_t codigo=0;
     fecha_t dob;
-    char nombre[MAX_CHAR];
-    char apellido[MAX_CHAR];
 
 
     printf("Datos de cliente nuevo (por favor ingrese unicamente datos validos)\n");
@@ -94,19 +90,16 @@ void cargarCliente(cliente_t *ptrtoclientes, int *ptrtocantidad){
         ptrtoclientes[i].codigo=codigo;
 
         printf("Ingrese el Nombre: ");
-        scanf("%49s",nombre);
+        scanf("%49s",ptrtoclientes[i].nombre);
         //no incluye el ampersand porque char nombre ya se comporta
         //como un puntero, que indica la primera letra del string
-        strcpy(ptrtoclientes[i].nombre,nombre);
 
         printf("Ingrese el Apellido: ");
-        scanf("%49s",apellido);
+        scanf("%49s",ptrtoclientes[i].apellido);
         //%49s - previene buffer overload.
         //no importa la cantidad de caracteres que
         //ingrese el usuario, va a parar de leerlos
         //en 49, dejando el espacio 50 para el \0
-        strcpy(ptrtoclientes[i].apellido,apellido);
-        //strcpy es una funcion que copia strings
 
         printf("Ingrese la Fecha de Nacimiento:\n");
         printf("Dia: ");
@@ -119,14 +112,14 @@ void cargarCliente(cliente_t *ptrtoclientes, int *ptrtocantidad){
         scanf("%d",&dob.anio);
         ptrtoclientes[i].fechaNacimiento.anio=dob.anio;
 
-        printf("Datos Ingresados:\n");
-        printf("Codigo: %d\n",ptrtoclientes[i].codigo);
-        printf("Nombre Completo: %s %s\n",ptrtoclientes[i].nombre,ptrtoclientes[i].apellido);
-        printf("Fecha de Nacimiento: %d/%d/%d\n",ptrtoclientes[i].fechaNacimiento.dia,ptrtoclientes[i].fechaNacimiento.mes,ptrtoclientes[i].fechaNacimiento.anio);
+        printf("\nDatos Ingresados:\n");
+        printf("\tCodigo: %d\n",ptrtoclientes[i].codigo);
+        printf("\tNombre Completo: %s %s\n",ptrtoclientes[i].nombre,ptrtoclientes[i].apellido);
+        printf("\tFecha de Nacimiento: %d/%d/%d\n",ptrtoclientes[i].fechaNacimiento.dia,ptrtoclientes[i].fechaNacimiento.mes,ptrtoclientes[i].fechaNacimiento.anio);
 
         i++;
 
-        printf("Finalizar la carga? (1 FIN - 0 CONTINUAR): ");
+        printf("\nFinalizar la carga? (1 FIN - 0 CONTINUAR): ");
         scanf("%d",&finalizar);
     }while(finalizar!=TRUE);
 
@@ -140,7 +133,7 @@ void cargarCliente(cliente_t *ptrtoclientes, int *ptrtocantidad){
         printf("\nOcurrio un error.\n");
     }
 
-    printf("\nTotal de clientes registrados: %d\n",*ptrtocantidad);
+    printf("Total de clientes registrados: %d\n",*ptrtocantidad);
 }
 
 int buscarCliente(cliente_t clientes[], int *ptrtoCantidad){
@@ -164,11 +157,11 @@ int buscarCliente(cliente_t clientes[], int *ptrtoCantidad){
     return target;
 }
 
-void mostrarCliente(cliente_t *ptrclientes, int indice){
-    printf("Datos del cliente:\n");
-    printf("Codigo: %d\n",ptrclientes[indice].codigo);
-    printf("Nombre Completo: %s %s\n",ptrclientes[indice].nombre,ptrclientes[indice].apellido);
-    printf("Fecha de Nacimiento: %d/%d/%d\n",ptrclientes[indice].fechaNacimiento.dia,ptrclientes[indice].fechaNacimiento.mes,ptrclientes[indice].fechaNacimiento.anio);
+void mostrarCliente(cliente_t ptrclientes[], int indice){
+    printf("\nDatos del cliente:\n");
+    printf("\tCodigo: %d\n",ptrclientes[indice].codigo);
+    printf("\tNombre Completo: %s %s\n",ptrclientes[indice].nombre,ptrclientes[indice].apellido);
+    printf("\tFecha de Nacimiento: %d/%d/%d\n",ptrclientes[indice].fechaNacimiento.dia,ptrclientes[indice].fechaNacimiento.mes,ptrclientes[indice].fechaNacimiento.anio);
 
     pausa();
 }
