@@ -35,7 +35,7 @@ typedef struct
 } factura;
 
 void inicializacion(regcli[Cli], articulo[Art]);    //  Inicializa los datos de los clientes y los artículos
-void facturar(regcli[Cli], articulo[Art], factura facturas[], int); //  función para facturar( paso clientes, articulo,  facturas, &contador de facturas)
+void facturar(regcli[Cli], articulo[Art], factura facturas[], int *); //  función para facturar( paso clientes, articulo,  facturas, &contador de facturas)
 void mostrarClientes(regcli[Cli]);                                // aqui paso  la estructura de clientes
 void mostrarArticulos(articulo[Art]);                             // aqui paso  la estructura de articulos
 void mostrarFacturas(factura facturas[], int);                    // aqui paso la  estructura de facturas y el contador de facturas
@@ -71,7 +71,7 @@ void menu(regcli clientes[], articulo articulos[], factura facturas[], int *cont
         switch (opcion)
         {
         case 1:
-            facturar(clientes,articulos,facturas,&contfact);
+            facturar(clientes,articulos,facturas,contfact);
             break;
         case 2:
             mostrarClientes(clientes);
@@ -119,11 +119,14 @@ void inicializacion(regcli clientes[], articulo articulos[])
     }
 }
 
-void facturar(regcli clientes[Cli], articulo articulos[Art], factura facturas[], int contfact)
+void facturar(regcli clientes[Cli], articulo articulos[Art], factura facturas[], int *contfact)
 {
     int litros, cod_cliente, cod_articulo;
     int input_usuario;
-    int contador=0;
+
+    printf("value stored in address: %d\n",*contfact);
+    printf("pointer's address: %d\n",&contfact);
+    printf("address pointer points to: %d\n",contfact);
 
     do{
         printf("\nIngrese el codigo del cliente (1 a 5):\n");
@@ -137,11 +140,11 @@ void facturar(regcli clientes[Cli], articulo articulos[Art], factura facturas[],
         printf("\nIngrese un codigo nuevo para la Factura. Ingrese 0 para finalizar la carga.\n");
     scanf("%d",&input_usuario);
 
-        if(validar_codigo(facturas,input_usuario,contador)==true){
+        if(validar_codigo(facturas,input_usuario,*contfact)==true){
             printf("\nEl codigo ya existe, debe ingresar uno nuevo.\n");
             scanf("%d",&input_usuario);
         }else{
-            facturas[contador].numFactura=input_usuario;
+            facturas[*contfact].numFactura=input_usuario;
         }
 
         do{
@@ -155,17 +158,16 @@ void facturar(regcli clientes[Cli], articulo articulos[Art], factura facturas[],
                 printf("\nNo hay mas stock de ese articulo.\n");
             }else{
                 clientes[cod_cliente-1].fac+=(litros*articulos[cod_articulo-1].pre);
-                articulos[cod_articulo].sto-=litros;
+                articulos[cod_articulo-1].sto-=litros;
             }
 
         }while(cod_articulo!=SALIDA);
 
-        contador++;
-        contfact=contador;
+        (*contfact)++;
 
     }while(input_usuario!=SALIDA);
 
-    printf("\nTotal de facturas: %d \n",contador);
+    printf("\nTotal de facturas: %d \n",*contfact);
     printf("\nFACTURA NRO %d \n",facturas[cod_cliente].numFactura);
     printf("NOMBRE DEL CLIENTE: %s\n",clientes[cod_cliente-1].nom);
     printf("CODIGO DEL CLIENTE: %d\n",clientes[cod_cliente-1].cod);
@@ -230,9 +232,9 @@ void tecla(void)
     getch();
 }
 
-bool validar_codigo(factura facturas[],int codigo,int contador)
+bool validar_codigo(factura facturas[],int codigo,int contfact)
 {
-    for(int i=0;i<contador;i++){
+    for(int i=0;i<contfact;i++){
         if(facturas[i].numFactura==codigo){
             return true;
         }else{
