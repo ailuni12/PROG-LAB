@@ -1,0 +1,44 @@
+// Estructura para clientes
+typedef struct
+{
+    int cod;      // Código del cliente
+    char nom[30]; // Nombre del Cliente
+    float fac;    // Total facturado por cliente
+} regcli;
+
+// Estructura para artículos
+typedef struct
+{
+    int cod;      // Código del artículo
+    char nom[30]; // Denominación del artículo
+    float pre;    // Precio por litro del artículo
+    int sto;      // Stock disponible del artículo
+    int vendidos; // Cantidad total de litros vendidos
+} articulo;
+
+// Estructura para facturas
+typedef struct
+{
+    int numFactura; // Número de factura
+    int codCliente; // Código del cliente
+    float total;    // Total facturado en esa factura
+} factura;
+
+*** INFORME DE CLIENTES ***
+COD. CLIENTE | NOMBRE DEL CLIENTE            | TOTAL FACTURADO
+**************************************************
+           1 | Julian LOPEZ                   |           0.00
+           2 | Marcelo RIOS                   |           0.00
+           3 | Alvaro CARPIO                  |           0.00
+           4 | Facundo PAREDES                |           0.00
+           5 | Roberto MALDONADO              |           0.00
+
+*** INFORME DE ARTICULOS ***
+COD. ARTICULO | DENOMINACION         | STOCK | LITROS VENDIDOS
+**************************************************
+            1 | COCA COLA            |    73 |              0
+            2 | FANTA POMELO         |   120 |              0
+            3 | FANTA NARANJA        |    76 |              0
+            4 | SPRITE               |    34 |              0
+            5 | AGUA VILLA DEL SUR   |    77 |              0
+            6 | MANAOS               |    98 |              0
