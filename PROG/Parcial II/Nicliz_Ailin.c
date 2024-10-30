@@ -177,7 +177,7 @@ void facturar(regcli_t clientes[MAX_CLIENTES], articulo_t articulos[MAX_ARTICULO
 
                     if(litros>articulos[cod_articulo-1].sto){
                         printf("\nNo hay stock suficiente de ese articulo para esa cantidad de litros.\n");
-                    }else{
+                    }else if(litros<MIN_STOCK){
                         printf("\nIngreso un dato invalido, intente nuevamente.\n");
                     }
 
