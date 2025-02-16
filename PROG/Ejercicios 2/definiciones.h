@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #define MAX_CLI 5
 #define MAX_CHAR 50
 
