@@ -27,7 +27,7 @@ int numero_aleatorio(int max, int min){
     return rand()%(max-min+1)+min;
 }
 
-void stanby(void){
+void standby(void){
     printf("\nPresione Enter para continuar.\n");
     fflush(stdin);
     getchar();
