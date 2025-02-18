@@ -107,9 +107,9 @@ void mostrar_inventario(producto_t inventario[][MAX_COL]){
     for(int i=0;i<MAX_ROW;i++){
         for(int j=0;j<MAX_COL;j++){
             printf("|   [%d][%d]   ",(i+1),(j+1));
-            printf("| %6d ",inventario[i][j].codigo);
+            printf("|   %04d ",inventario[i][j].codigo);
             printf("| %-13s ",inventario[i][j].nombre);
-            printf("| %6d ",inventario[i][j].cantidad);
+            printf("|    %03d ",inventario[i][j].cantidad);
             printf("| %8.2f  |\n",inventario[i][j].precio);
         }
         printf("------------------------------------------------------------\n");
@@ -310,9 +310,9 @@ void mostrar_estante(producto_t inventario[][MAX_COL]){
     printf("\n|  UBICACION | CODIGO | PRODUCTO      | STOCK  | PRECIO    | \n");
     for(int i=0;i<MAX_COL;i++){
         printf("|     [%d]    ",i+1);
-        printf("| %6d ",inventario[fila][i].codigo);
+        printf("|   %04d ",inventario[fila][i].codigo);
         printf("| %-13s ",inventario[fila][i].nombre);
-        printf("| %6d ",inventario[fila][i].cantidad);
+        printf("|    %03d ",inventario[fila][i].cantidad);
         printf("| %8.2f  |\n",inventario[fila][i].precio);
     }
     standby();
