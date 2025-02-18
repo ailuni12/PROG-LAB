@@ -103,16 +103,16 @@ void fill_array(producto_t inventario[][MAX_COL]){
 
 void mostrar_inventario(producto_t inventario[][MAX_COL]){
     printf("****INVENTARIO COMPLETO****\n");
-    printf("\n|  UBICACION | CODIGO | PRODUCTO      | STOCK  | PRECIO   | \n");
+    printf("\n|  UBICACION | CODIGO | PRODUCTO      | STOCK  | PRECIO    | \n");
     for(int i=0;i<MAX_ROW;i++){
         for(int j=0;j<MAX_COL;j++){
             printf("|   [%d][%d]   ",(i+1),(j+1));
             printf("| %6d ",inventario[i][j].codigo);
             printf("| %-13s ",inventario[i][j].nombre);
             printf("| %6d ",inventario[i][j].cantidad);
-            printf("| %7.2f  |\n",inventario[i][j].precio);
+            printf("| %8.2f  |\n",inventario[i][j].precio);
         }
-        printf("----------------------------------------------------------\n");
+        printf("------------------------------------------------------------\n");
     }
     mostrar_tabla(inventario);
     standby();
@@ -165,6 +165,9 @@ void search_code(producto_t inventario[][MAX_COL]){
 void registrar_item(producto_t inventario[][MAX_COL]){
     int input_usuario=1;
     int codigo=-1;
+    char nombre[50];
+    float precio=0;
+    int cantidad=0;
     int fila=MIN_ROW;
     int col=MIN_COL;
 
@@ -220,17 +223,44 @@ void registrar_item(producto_t inventario[][MAX_COL]){
                 }
             } while (validar_lugar(fila,col,inventario));
 
+            printf("\nIngrese el nombre de item.\n");
+            printf("Item: ");
+            scanf("%49s",&nombre);
+
+            printf("\nIngrese el precio.\n");
+            printf("Precio: ");
+            scanf("%f",&precio);
+
+            while(precio>99999 || precio<1){
+                printf("\nNumero invalido, ingrese nuevamente.\n");
+                printf("Precio: ");
+                scanf("%f",&precio);
+            }
+
+            printf("\nIngrese la cantidad.\n");
+            printf("Cantidad: ");
+            scanf("%d",&cantidad);
+
+            while(cantidad>999 || cantidad<1){
+                printf("\nNumero invalido, ingrese nuevamente.\n");
+                printf("Cantidad: ");
+                scanf("%d",&cantidad);
+            }
+
             fila-=1;
             col-=1;
             inventario[fila][col].codigo=codigo;
+            strcpy(inventario[fila][col].nombre,nombre);
+            inventario[fila][col].cantidad=cantidad;
+            inventario[fila][col].precio=precio;
     
             printf("\nDatos ingresados:\n");
-            printf("\n|  UBICACION | CODIGO | PRODUCTO      | STOCK  | PRECIO   | \n");
+            printf("\n|  UBICACION | CODIGO | PRODUCTO      | STOCK  | PRECIO    | \n");
             printf("|   [%d][%d]   ",fila+1,col+1);
             printf("| %6d ",inventario[fila][col].codigo);
             printf("| %-13s ",inventario[fila][col].nombre);
             printf("| %6d ",inventario[fila][col].cantidad);
-            printf("| %7.2f  |\n",inventario[fila][col].precio);
+            printf("| %8.2f  |\n",inventario[fila][col].precio);
 
             printf("\nDesea ingresar un producto nuevo? <SI = 1><NO = 0>: ");
             scanf("%d",&input_usuario);
@@ -277,13 +307,13 @@ void mostrar_estante(producto_t inventario[][MAX_COL]){
     fila-=1;
 
     printf("\n****ESTANTE: %d****",fila+1);
-    printf("\n|  UBICACION | CODIGO | PRODUCTO      | STOCK  | PRECIO   | \n");
+    printf("\n|  UBICACION | CODIGO | PRODUCTO      | STOCK  | PRECIO    | \n");
     for(int i=0;i<MAX_COL;i++){
         printf("|     [%d]    ",i+1);
         printf("| %6d ",inventario[fila][i].codigo);
         printf("| %-13s ",inventario[fila][i].nombre);
         printf("| %6d ",inventario[fila][i].cantidad);
-        printf("| %7.2f  |\n",inventario[fila][i].precio);
+        printf("| %8.2f  |\n",inventario[fila][i].precio);
     }
     standby();
 }
