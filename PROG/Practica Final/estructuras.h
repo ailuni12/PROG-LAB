@@ -5,3 +5,9 @@ typedef enum{
     salida
 }menu_t;
 
+typedef struct{
+    int integer;
+    char string[30];
+    float float_num;
+    
+}estructura_t;

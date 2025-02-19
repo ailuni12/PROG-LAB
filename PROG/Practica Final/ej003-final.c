@@ -20,40 +20,41 @@ int main(void){
 void menu(){
     int opcion=0;
 
-    printf("\n***MENU DE NAVEGACION***\n");
-    printf("\nSeleccione la opcion que desea:\n");
-    printf("[1] Opcion 1.\n");
-    printf("[2] Opcion 2.\n");
-    printf("[3] Opcion 3.\n");
-    printf("[4] Salir.\n");
-    printf("\nOpcion: ");
-    scanf("%d",&opcion);
-
     do{
+        printf("\n***MENU DE NAVEGACION***\n");
+        printf("\nSeleccione la opcion que desea:\n");
+        printf("[1] Opcion 1.\n");
+        printf("[2] Opcion 2.\n");
+        printf("[3] Opcion 3.\n");
+        printf("[4] Salir.\n");
+        printf("\nOpcion: ");
+        scanf("%d",&opcion);
+
         switch(opcion){
-        case 1:
+        case opcion1:
             printf("\nOpcion 1.\n");
             standby();
             break;
-        case 2:
+        case opcion2:
             printf("\nOpcion 2.\n");
             standby();
             break;
-        case 3:
+        case opcion3:
             printf("\nOpcion 3.\n");
             standby();
             break;
-        case 4:
-            printf("\nGracias por usar la herramienta.");
-            printf("\nPresione Enter para finalizar.\n");
-            fflush(stdin);
-            getchar();
+        case salida:
+            despedida();
             break;
         default:
-            printf("\nIngreso una opcion invalida.\n");
+            printf("\nIngreso una opcion invalida.");
             printf("\nIngrese nuevamente\n");
             printf("\nOpcion: ");
             scanf("%d",&opcion);
+
+            if(opcion==4){
+                despedida();
+            }
             break;
         }
     } while(opcion!=salida);
