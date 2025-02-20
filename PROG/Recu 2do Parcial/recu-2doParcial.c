@@ -73,7 +73,6 @@ void menu(tecnico_t tecnicos[MAX_TEC],int *tecnicos_registrados){
                 printf("\n\tDesea registrar otra visita? 1-SI 0-NO: ");
                 scanf("%d",&input_usuario);
             }while(input_usuario!=SALIDA);
-            
             break;
         case registro_tecnico:
             do{
@@ -104,48 +103,47 @@ void registrar_visita(tecnico_t tecnicos[],int *tecnicos_registrados){
 
     printf("\nNUEVA VISITA\n");
 
-        printf("Ingrese el codigo del tecnico: ");
-        scanf("%d",&codigo);
+    printf("Ingrese el codigo del tecnico: ");
+    scanf("%d",&codigo);
 
-        while(codigo>MAX_TEC || codigo<MIN_TEC){
-            printf("\nIngrese un numero valido.\n");
+    while(codigo>MAX_TEC || codigo<MIN_TEC){
+        printf("\nIngrese un numero valido.\n");
+        scanf("%d",&codigo);
+    }
+
+    do{
+        if(!validar_codigo(tecnicos,codigo)){
+            printf("\nNo existe ese codigo, debe crear un nuevo registro.\n");
+    
+            registrar_tecnico(tecnicos,tecnicos_registrados);
+                
+            printf("\nIngrese el codigo del tecnico: ");
             scanf("%d",&codigo);
         }
+    }while(!validar_codigo(tecnicos,codigo));
 
-        do
-        {
-            if(!validar_codigo(tecnicos,codigo)){
-                printf("\nNo existe ese codigo, debe crear un nuevo registro.\n");
-    
-                registrar_tecnico(tecnicos,tecnicos_registrados);
-                
-                printf("\nIngrese el codigo del tecnico: ");
-                scanf("%d",&codigo);
-            }
-        }while(!validar_codigo(tecnicos,codigo));
-
-        location=check_location(tecnicos,codigo);
+    location=check_location(tecnicos,codigo);
         
+    printf("\nIngrese las horas trabajadas: ");
+    scanf("%d",&horas);
+
+    while(horas<MIN_HORA || horas>MAX_HORA){
+        printf("\nNumero de horas invalido (Min 1, Max 8).\n");
         printf("\nIngrese las horas trabajadas: ");
         scanf("%d",&horas);
-
-        while(horas<MIN_HORA || horas>MAX_HORA){
-            printf("\nNumero de horas invalido (Min 1, Max 8).\n");
-            printf("\nIngrese las horas trabajadas: ");
-            scanf("%d",&horas);
-        }
+    }
             
-        tecnicos[location].horas_trabajadas+=horas;
-        tecnicos[location].cant_visitas+=1;
-        tecnicos[location].pago_acumulado+=(horas*HORA_TRABAJADA);
+    tecnicos[location].horas_trabajadas+=horas;
+    tecnicos[location].cant_visitas+=1;
+    tecnicos[location].pago_acumulado+=(horas*HORA_TRABAJADA);
 
-        printf("\nDATOS INGRESADOS:\n");
-        printf("Codigo: %d\n",codigo);
-        printf("Nombre: %s\n",tecnicos[location].nombre_tec);
-        printf("Horas: %d\n",horas);
-        printf("Total de visitas: %d\n",tecnicos[location].cant_visitas);
-        printf("Pago Acumulado: %.2f\n",tecnicos[location].pago_acumulado);
-        printf("LA VISITA SE REGISTRO CON EXITO.\n");
+    printf("\nDATOS INGRESADOS:\n");
+    printf("Codigo: %d\n",codigo);
+    printf("Nombre: %s\n",tecnicos[location].nombre_tec);
+    printf("Horas: %d\n",horas);
+    printf("Total de visitas: %d\n",tecnicos[location].cant_visitas);
+    printf("Pago Acumulado: %.2f\n",tecnicos[location].pago_acumulado);
+    printf("LA VISITA SE REGISTRO CON EXITO.\n");
  
 }
 
