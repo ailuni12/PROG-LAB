@@ -5,6 +5,8 @@
 #include <time.h>
 
 #define HORA_TRABAJADA 6000
+#define MAX_HORA 8
+#define MIN_HORA 1
 #define MAX_TEC 50
 #define MIN_TEC 1
 #define SALIDA 0
@@ -25,10 +27,11 @@ typedef struct{
 }tecnico_t;
 
 void menu(tecnico_t [],int *);
-void registrar_visita(tecnico_t []);
+void registrar_visita(tecnico_t [], int *);
 void registrar_tecnico(tecnico_t [],int *);
-bool validar_codigo(tecnico_t [],int, int);
+bool validar_codigo(tecnico_t [],int);
 void mostrar(tecnico_t [],int);
+int check_location(tecnico_t [],int);
 
 int main(void){
     int tecnicos_registrados=0;
@@ -40,6 +43,7 @@ int main(void){
         tecnicos[i].horas_trabajadas=0;
         tecnicos[i].cant_visitas=0;
         tecnicos[i].pago_acumulado=0;
+        strcpy(tecnicos[i].nombre_tec,"N/A");
     }
 
     menu(tecnicos,&tecnicos_registrados);
@@ -49,6 +53,7 @@ int main(void){
 
 void menu(tecnico_t tecnicos[MAX_TEC],int *tecnicos_registrados){
     int opcion=0;
+    int input_usuario=-1;
 
     do{
         printf("\nGESTOR DE VISITAS TECNICAS\n");
@@ -56,14 +61,27 @@ void menu(tecnico_t tecnicos[MAX_TEC],int *tecnicos_registrados){
         printf("\t\n2 - Registrar Tecnico");
         printf("\t\n3 - Informe de Tecnicos");
         printf("\t\n4 - Finalizar\n");
+        printf("\t\nOpcion: ");
         scanf("%d",&opcion);
 
         switch (opcion){
         case registro_visita:
-            registrar_visita(tecnicos);
+            do
+            {
+                registrar_visita(tecnicos,tecnicos_registrados);
+
+                printf("\n\tDesea registrar otra visita? 1-SI 0-NO: ");
+                scanf("%d",&input_usuario);
+            }while(input_usuario!=SALIDA);
+            
             break;
         case registro_tecnico:
-            registrar_tecnico(tecnicos,tecnicos_registrados);
+            do{
+                registrar_tecnico(tecnicos,tecnicos_registrados);
+
+                printf("\n\tDesea registrar otro tecnico? 1-SI 0-NO: ");
+                scanf("%d",&input_usuario);
+            }while(input_usuario!=SALIDA);
             break;
         case informe_tecnicos:
             mostrar(tecnicos,*tecnicos_registrados);
@@ -81,45 +99,64 @@ void menu(tecnico_t tecnicos[MAX_TEC],int *tecnicos_registrados){
     
 }
 
-void registrar_visita(tecnico_t tecnicos[]){
-    int input_usuario=-1, codigo=0, horas=0;
+void registrar_visita(tecnico_t tecnicos[],int *tecnicos_registrados){
+    int codigo=0, horas=0, location=0;
 
-    printf("Desea registrar una nueva visita? 1-SI 0-NO.\n");
-    scanf("%d",&input_usuario);
+    printf("\nNUEVA VISITA\n");
 
-    do{
         printf("Ingrese el codigo del tecnico: ");
         scanf("%d",&codigo);
 
-        printf("Ingrese las horas trabajadas: ");
+        while(codigo>MAX_TEC || codigo<MIN_TEC){
+            printf("\nIngrese un numero valido.\n");
+            scanf("%d",&codigo);
+        }
+
+        do
+        {
+            if(!validar_codigo(tecnicos,codigo)){
+                printf("\nNo existe ese codigo, debe crear un nuevo registro.\n");
+    
+                registrar_tecnico(tecnicos,tecnicos_registrados);
+                
+                printf("\nIngrese el codigo del tecnico: ");
+                scanf("%d",&codigo);
+            }
+        }while(!validar_codigo(tecnicos,codigo));
+
+        location=check_location(tecnicos,codigo);
+        
+        printf("\nIngrese las horas trabajadas: ");
         scanf("%d",&horas);
+
+        while(horas<MIN_HORA || horas>MAX_HORA){
+            printf("\nNumero de horas invalido (Min 1, Max 8).\n");
+            printf("\nIngrese las horas trabajadas: ");
+            scanf("%d",&horas);
+        }
             
-        tecnicos[codigo-1].horas_trabajadas+=horas;
-        tecnicos[codigo-1].cant_visitas+=1;
-        tecnicos[codigo-1].pago_acumulado+=(horas*HORA_TRABAJADA);
+        tecnicos[location].horas_trabajadas+=horas;
+        tecnicos[location].cant_visitas+=1;
+        tecnicos[location].pago_acumulado+=(horas*HORA_TRABAJADA);
 
-        printf("DATOS INGRESADOS:\n");
+        printf("\nDATOS INGRESADOS:\n");
         printf("Codigo: %d\n",codigo);
+        printf("Nombre: %s\n",tecnicos[location].nombre_tec);
         printf("Horas: %d\n",horas);
-        printf("Total de visitas: %d\n",tecnicos[codigo-1].cant_visitas);
-        printf("Pago Acumulado: %.2f\n",tecnicos[codigo-1].pago_acumulado);
-
-        printf("\nDesea registrar otra visita? 1-SI 0-NO.\n");
-        scanf("%d",&input_usuario);
-    }while(input_usuario!=SALIDA); 
+        printf("Total de visitas: %d\n",tecnicos[location].cant_visitas);
+        printf("Pago Acumulado: %.2f\n",tecnicos[location].pago_acumulado);
+        printf("LA VISITA SE REGISTRO CON EXITO.\n");
+ 
 }
 
 void registrar_tecnico(tecnico_t tecnicos[MAX_TEC],int *tecnicos_registrados){
-    int input_usuario=-1, codigo=0;
+    int codigo=0;
 
     if(*tecnicos_registrados>=MAX_TEC){
         printf("\nMaximo de registros posibles alcanzado.\n");
     }else{
-        printf("Desea registrar una nuevo Tecnico? 1-SI 0-NO.\n");
-        scanf("%d",&input_usuario);
-
-        do{
-            printf("Ingrese el codigo del tecnico: ");
+            printf("\nNUEVO REGISTRO");
+            printf("\nIngrese el codigo del tecnico: ");
             scanf("%d",&codigo);
 
             while(codigo>MAX_TEC || codigo<MIN_TEC){
@@ -127,49 +164,58 @@ void registrar_tecnico(tecnico_t tecnicos[MAX_TEC],int *tecnicos_registrados){
                 scanf("%d",&codigo);
             }
             
-            while(validar_codigo(tecnicos,codigo,*tecnicos_registrados)==true){
-                printf("\nIngrese el codigo del tecnico: ");
-                scanf("%d",&codigo);
-            }
+            do{
+                if(validar_codigo(tecnicos,codigo)){
+                    printf("\nEl codigo ya existe, ingrese otro.");
+                    printf("\nEl codigo no puede ser 0.");
+                    printf("\nIngrese el codigo del tecnico: ");
+                    scanf("%d",&codigo);
+                }  
+            }while(validar_codigo(tecnicos,codigo));
 
-            tecnicos[codigo-1].cod_tec=codigo;
+            tecnicos[*tecnicos_registrados].cod_tec=codigo;
 
             printf("Ingrese el Nombre del tecnico: ");
-            scanf("%29s",tecnicos[codigo-1].nombre_tec);
+            scanf("%29s",tecnicos[*tecnicos_registrados].nombre_tec);
 
-            printf("DATOS INGRESADOS:\n");
+            printf("\nDATOS INGRESADOS:\n");
             printf("Codigo: %d\n",codigo);
-            printf("Nombre: %s\n",tecnicos[codigo-1].nombre_tec);
+            printf("Nombre: %s\n",tecnicos[*tecnicos_registrados].nombre_tec);
+            printf("REGISTRO CREADO CON EXITO\n");
 
             (*tecnicos_registrados)++;
-
-            printf("\nDesea registrar otro tecnico? 1-SI 0-NO.\n");
-            scanf("%d",&input_usuario);
-
-        }while(input_usuario!=SALIDA);
+        
     }
 
 }
 
 void mostrar(tecnico_t tecnicos[MAX_TEC],int i){
-    printf("\n\t\tInforme de Tecnicos\n\n");
-    printf("\n Cod \t Tecnicos\t\t Visitas Horas\tPago\n\n\n");
+    printf("\n\t***Informe de Tecnicos***\n");
+    printf("\n| Cod | Nombre  | Visitas | Horas | Pago     |\n");
     int j=0;
     while(j<i){
-        printf("\n %-10d%-20s %4d\t\t%4d\n\n",tecnicos[j].cod_tec,tecnicos[j].nombre_tec,tecnicos[j].cant_visitas,tecnicos[j].horas_trabajadas);
+        printf("|  %02d | %-8s|      %02d | %5d | %8.2f |\n",tecnicos[j].cod_tec,tecnicos[j].nombre_tec,tecnicos[j].cant_visitas,tecnicos[j].horas_trabajadas,tecnicos[j].pago_acumulado);
         j++;
     }
 }
 
-bool validar_codigo(tecnico_t tecnicos[],int codigo, int tecnicos_registrados){
-    for(int i=0;i<tecnicos_registrados;i++){
+bool validar_codigo(tecnico_t tecnicos[],int codigo){
+    for(int i=0;i<MAX_TEC;i++){
         if(tecnicos[i].cod_tec==codigo){
-            printf("\nEl codigo ya existe, ingrese otro.");
-            return true;
-        }else if(tecnicos[i].cod_tec==0){
-            printf("\nNo existe ese codigo, debe crear un nuevo registro.");
             return true;
         }
     }
     return false;
+}
+
+int check_location(tecnico_t tecnicos[],int codigo){
+    int location=0;
+
+    for(int i=0;i<MAX_TEC;i++){
+        if(tecnicos[i].cod_tec==codigo){
+            location=i;
+        }
+    }
+
+    return location;
 }
