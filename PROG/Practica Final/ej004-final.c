@@ -15,8 +15,6 @@
 #define max_cod 9999
 #define MAX_PRECIO 99999
 #define MAX_CHAR 50
-#define SI 1
-#define NO 0
 
 void fill_array(producto_t [][MAX_COL]);
 void mostrar_inventario(producto_t [][MAX_COL]);
@@ -41,7 +39,7 @@ int main(void){
 void menu(producto_t inventario[][MAX_COL]){
     int opcion=0;
     int opcion_submenu=0;
-    int input_usuario=SI;
+    int input_usuario=true;
 
     do{
         printf("\n*** MENU DE INVENTARIO ***\n");
@@ -60,7 +58,7 @@ void menu(producto_t inventario[][MAX_COL]){
 
                 printf("\nDesea registrar otro item? (SI: 1, NO: 0)\nEleccion: ");
                 scanf("%d",&input_usuario);
-            }while(input_usuario!=NO);
+            }while(input_usuario!=false);
             break;
         case MOSTRAR_INVENTARIO:
             printf("Seleccione que quiere mostrar.\n");
@@ -119,13 +117,12 @@ void mostrar_inventario(producto_t inventario[][MAX_COL]){
         for(int j=0;j<MAX_COL;j++){
             printf("|   [%d][%d]   ",(i+1),(j+1));
             printf("|   %04d ",inventario[i][j].codigo);
-            printf("| %-13s ",inventario[i][j].nombre);
+            printf("| %-13.13s ",inventario[i][j].nombre);
             printf("|    %03d ",inventario[i][j].cantidad);
             printf("| %8.2f  |\n",inventario[i][j].precio);
         }
         printf("------------------------------------------------------------\n");
     }
-    mostrar_tabla(inventario);
     standby();
 }
 
@@ -141,7 +138,7 @@ void mostrar_tabla(producto_t inventario[][MAX_COL]){
         }
         printf(" |\n");
         for(int h=0;h<MAX_COL;h++){
-            printf("  | %-11s ",inventario[i][h].nombre);
+            printf("  | %-11.11s ",inventario[i][h].nombre);
         }
         printf("  |\n");
         printf("  --------------------------------------------------\n");
@@ -185,13 +182,13 @@ void registrar_item(producto_t inventario[][MAX_COL]){
     printf("\n***NUEVO ITEM***\n");
 
     do{
-        printf("\nIngrese codigo del item. No puede ser 0 ni mayor a %d.\nCodigo: ",max_cod);
+        printf("\nIngrese codigo del item.\nCodigo: ");
         scanf("%d",&codigo);
 
-        if(validar_codigo(codigo,inventario)){
+        if(codigo<MIN || codigo>max_cod){
+            printf("\nERROR. Codigo invalido. No puede ser menor que %d ni mayor a %d.",min_cod,max_cod);
+        }else if(validar_codigo(codigo,inventario)){
             printf("\nERROR. El codigo ya existe, debe ingresar otro.");
-        }else if(codigo<0 || codigo>9999){
-            printf("\nERROR. Codigo invalido. No puede ser 0 ni mayor a %d.",max_cod);
         }else{
             codigo_valido=true;
         }
@@ -199,30 +196,27 @@ void registrar_item(producto_t inventario[][MAX_COL]){
     }while(!codigo_valido);
 
     do{
-        printf("\nEn que estante quiere guardar el item?");
-        printf("\nFila/Estante: ");
-        scanf("%d",&fila);
         printf("\nEn que ubicacion quiere guardar el item?");
-        printf("\nColumna/Numero: ");
+        printf("\nFila: ");
+        scanf("%d",&fila);
+        printf("Columna: ");
         scanf("%d",&col);
             
-        if(validar_lugar(fila,col,inventario)){
-            printf("\nERROR. En esa ubicacion ya existe un elemento guardado. Ingrese otra.\n");   
-        }else if(fila>MAX_ROW || fila<MIN_ROW){
-            printf("\nERROR. Estante/Fila no existe. Ingrese nuevamente.\n");
-        }else if(col>MAX_COL || col<MIN_COL){
-            printf("\nERROR. Ubicacion/Columna no existe. Ingrese nuevamente.\n");
+        if(col>MAX_COL || col<MIN_COL || fila>MAX_ROW || fila<MIN_ROW){
+            printf("\nERROR. La Fila y/o Columna no existe. Ingrese nuevamente.");   
+        }else if(validar_lugar(fila-1,col-1,inventario)){
+            printf("\nERROR. En esa ubicacion ya existe un elemento guardado. Ingrese otra.\n");
         }else{
             ubicacion_ok=true;
+            fila-=1;
+            col-=1;
         }
-
-        fila-=1;
-        col-=1;
 
     }while(!ubicacion_ok);
 
     printf("\nIngrese el nombre de item.");
     printf("\nNombre: ");
+    fflush(stdin);
     fgets(inventario[fila][col].nombre,MAX_CHAR,stdin);
     inventario[fila][col].nombre[strcspn(inventario[fila][col].nombre,"\n")]='\0';
 
@@ -240,7 +234,7 @@ void registrar_item(producto_t inventario[][MAX_COL]){
     do{
         printf("\nIngrese la cantidad.");
         printf("\nCantidad: ");
-        scanf("%f",&cantidad);
+        scanf("%d",&cantidad);
 
         if (cantidad>99 || cantidad<MIN){
             printf("\nERROR. Valor invalido. No puede ser 0 ni mayor a 99");
@@ -248,7 +242,14 @@ void registrar_item(producto_t inventario[][MAX_COL]){
         
     }while(cantidad>99 || cantidad<MIN);
 
-    
+    inventario[fila][col].codigo=codigo;
+    inventario[fila][col].cantidad=cantidad;
+    inventario[fila][col].precio=precio;
+
+    printf("\n***DATOS INGRESADOS***\n");
+    printf("\n\tItem: %s",inventario[fila][col].nombre);
+    printf("\n\t| Ubicacion | Codigo | Stock | Precio  |");
+    printf("\n\t|   [%d][%d]  |   %04d |    %02d | %5.2f |\n",fila+1,col+1,inventario[fila][col].codigo,inventario[fila][col].cantidad,inventario[fila][col].precio);
    
 }
 
@@ -265,7 +266,7 @@ bool validar_codigo(int codigo,producto_t inventario[][MAX_COL]){
 
 bool validar_lugar(int fila, int col, producto_t inventario[][MAX_COL]){
 
-    if(inventario[fila-1][col-1].codigo!=0){
+    if(inventario[fila][col].codigo!=0){
         return true;
     }else{
         return false;
@@ -293,7 +294,7 @@ void mostrar_estante(producto_t inventario[][MAX_COL]){
     for(int i=0;i<MAX_COL;i++){
         printf("|     [%d]    ",i+1);
         printf("|   %04d ",inventario[fila][i].codigo);
-        printf("| %-13s ",inventario[fila][i].nombre);
+        printf("| %-13.13s ",inventario[fila][i].nombre);
         printf("|    %03d ",inventario[fila][i].cantidad);
         printf("| %8.2f  |\n",inventario[fila][i].precio);
     }
