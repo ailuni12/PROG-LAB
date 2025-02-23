@@ -11,6 +11,7 @@
 #define MAX_COL 3
 #define MAX_RAND 9999
 #define MIN_RAND 1
+#define MAX_CHAR 30
 
 int numero_aleatorio (int, int);
 void standby(void);
