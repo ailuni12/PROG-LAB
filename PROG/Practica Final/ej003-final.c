@@ -35,7 +35,7 @@ void menu(estructura_t array[][MAX_COL],int *counter){
         printf("[1] Mostrar datos.\n");
         printf("[2] Generar datos nuevos.\n");
         printf("[3] Guardar un item.\n");
-        printf("[4] Salir.\n");
+        printf("[%d] Salir.\n",salida);
         printf("\nOpcion: ");
         scanf("%d",&opcion);
 
