@@ -17,6 +17,7 @@ void menu(alumno_t [][MAX_COL]);
 void inicializar_lista(alumno_t [][MAX_COL]);
 void registrar_alumno(alumno_t [][MAX_COL]);
 void mostrar_lista(alumno_t [][MAX_COL]);
+void ordenar_por_edad(alumno_t [][MAX_COL]);
 bool validar_codigo(alumno_t [][MAX_COL],int);
 bool validar_lugar(alumno_t [][MAX_COL],int,int);
 
@@ -62,6 +63,7 @@ void menu(alumno_t alumnos[][MAX_COL]){
         case opcion3:
             break;
         case opcion4:
+            ordenar_por_edad(alumnos);
             break;
         case salida:
             despedida();
@@ -197,4 +199,39 @@ bool validar_lugar(alumno_t alumnos[][MAX_COL],int fila,int col){
     }else{
         return false;
     }
+}
+
+void ordenar_por_edad(alumno_t alumnos[][MAX_COL]){
+    alumno_t aux;
+    alumno_t aux_array[MAX_ROW*MAX_COL];
+    int index=0;
+
+    for(int i=0;i<MAX_ROW;i++){
+        for(int j=0;j<MAX_COL;j++){
+            aux_array[index++]=alumnos[i][j];
+        }
+    }
+
+    index=0;
+
+    for(int i=0;i<(MAX_ROW*MAX_COL);i++){
+        for(int j=0;j<(MAX_ROW*MAX_COL)-i-1;j++){
+            if(aux_array[j].edad<aux_array[j+1].edad){
+                aux=aux_array[j+1];
+                aux_array[j+1]=aux_array[j];
+                aux_array[j]=aux;
+            }
+        }
+    }
+
+    for(int i=0;i<MAX_ROW;i++){
+        for(int j=0;j<MAX_COL;j++){
+            alumnos[i][j]=aux_array[index++];
+        }
+    }
+
+    printf("\nSe ordeno la lista correctamente. Lista actualizada:\n");
+
+    mostrar_lista(alumnos);
+
 }
