@@ -17,6 +17,7 @@
 void menu(alumno_t [][MAX_COL]);
 void inicializar_lista(alumno_t [][MAX_COL]);
 void registrar_alumno(alumno_t [][MAX_COL]);
+void mostrar_lista(alumno_t [][MAX_COL]);
 bool validar_codigo(alumno_t [][MAX_COL],int);
 
 int main(void){
@@ -44,6 +45,7 @@ void menu(alumno_t alumnos[][MAX_COL]){
 
         switch (op){
         case opcion1:
+            mostrar_lista(alumnos);
             break;
         case opcion2:
             do{
@@ -150,6 +152,21 @@ void registrar_alumno(alumno_t alumnos[][MAX_COL]){
     printf("\n| ROW | COL | CODIGO | EDAD | PROM. | NOMBRE\n");
     printf("\n|  %d  |  %d  |  %04d  | %4d | %04.1f | %s\n",fila+1,col+1,alumnos[fila][col].codigo,alumnos[fila][col].edad,alumnos[fila][col].promedio,alumnos[fila][col].nombre);
 
+}
+
+void mostrar_lista(alumno_t alumnos[][MAX_COL]){
+
+    printf("\n***LISTA DE ALUMNOS***\n");
+    printf("Referencia: ROW->Fila COL->Asiento\n");
+    printf("\n\n| ROW | COL | CODIGO | EDAD | PROM. | NOMBRE\n");
+    printf("-------------------------------------------------\n");
+    for(int i=0;i<MAX_ROW;i++){
+        for(int j=0;j<MAX_COL;j++){
+            printf("\n|  %d  |  %d  |  %04d  | %4d | %04.1f | %s\n",i+1,j+1,alumnos[i][j].codigo,alumnos[i][j].edad,alumnos[i][j].promedio,alumnos[i][j].nombre);
+        }
+        printf("-------------------------------------------------\n");
+    }
+    
 }
 
 bool validar_codigo(alumno_t alumnos[][MAX_COL],int codigo){
