@@ -18,7 +18,7 @@ void standby(void);
 void despedida(void);
 void valor_incorrecto(void);
 
-int numero_aleatorio(int max, int min){
+int numero_aleatorio(int min, int max){
     return rand()%(max-min+1)+min;
 }
 

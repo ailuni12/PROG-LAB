@@ -13,18 +13,18 @@
 #define max_nota 10
 #define min_nota 1
 
-
 void menu(alumno_t [][MAX_COL]);
 void inicializar_lista(alumno_t [][MAX_COL]);
 void registrar_alumno(alumno_t [][MAX_COL]);
 void mostrar_lista(alumno_t [][MAX_COL]);
 bool validar_codigo(alumno_t [][MAX_COL],int);
+bool validar_lugar(alumno_t [][MAX_COL],int,int);
 
 int main(void){
-    alumno_t alumnos[MIN_ROW][MAX_COL];
+    alumno_t alumnos[MAX_ROW][MAX_COL];
 
-    srand(time(NULL));
     inicializar_lista(alumnos);
+    menu(alumnos);
 
     return 0;
 }
@@ -34,13 +34,14 @@ void menu(alumno_t alumnos[][MAX_COL]){
     int input_usuario=0;
 
     do{
-        printf("\n||| REGISTRO DE ALUMNOS |||\n");
+        printf("\n\n||| MENU DE NAVEGACION |||\n");
         printf("\nSeleccione una opcion:");
         printf("\n[1] Mostrar lista.");
         printf("\n[2] Registrar alumno nuevo.");
         printf("\n[3] Borrar alumno.");
         printf("\n[4] Ordenar lista.");
         printf("\n[%d] Finalizar.",salida);
+        printf("\nOpcion: ");
         scanf("%d",&op);
 
         switch (op){
@@ -53,10 +54,10 @@ void menu(alumno_t alumnos[][MAX_COL]){
 
                 printf("\nDesea Guardar otro item?\nSI-1 NO-0: ");
                 scanf("%d",&input_usuario);
-                if(input_usuario!=0 || input_usuario!=1){
+                if(input_usuario!=0 && input_usuario!=1){
                     valor_incorrecto();
                 }
-            }while(input_usuario!=0 || input_usuario!=1);
+            }while(input_usuario!=0);
             break;
         case opcion3:
             break;
@@ -73,6 +74,7 @@ void menu(alumno_t alumnos[][MAX_COL]){
 }
 
 void inicializar_lista(alumno_t alumnos[][MAX_COL]){
+
     for(int i=0;i<MAX_ROW;i++){
         for(int j=0;j<MAX_COL;j++){
             alumnos[i][j].codigo=0;
@@ -81,12 +83,17 @@ void inicializar_lista(alumno_t alumnos[][MAX_COL]){
             alumnos[i][j].promedio=0;
         }
     }
+
 }
 
 void registrar_alumno(alumno_t alumnos[][MAX_COL]){
-    int codigo=0, edad=0, fila=0, col=0;
+    int codigo=0;
+    int edad=0;
+    int fila=0;
+    int col=0;
     float promedio=0;
-    bool cod_ok=false, ubicacion_ok=false;
+    bool cod_ok=false;
+    bool ubicacion_ok=false;
 
     printf("\n|++| NUEVO ALUMNO |++|\n");
 
@@ -108,15 +115,15 @@ void registrar_alumno(alumno_t alumnos[][MAX_COL]){
     }while(!cod_ok);
 
     do{
-        printf("\nIngrese la ubicacion en el salon.\n");
+        printf("\nIngrese la ubicacion en el salon.");
         printf("\nFila (%d a %d): ",MIN_ROW,MAX_ROW);
         scanf("%d",&fila);
-        printf("\nAsiento(%d a %d): ",MIN_COL,MAX_COL);
+        printf("Asiento (%d a %d): ",MIN_COL,MAX_COL);
         scanf("%d",&col);
 
         if(fila>MAX_ROW || fila<MIN_ROW || col>MAX_COL || col<MIN_COL){
             valor_incorrecto();
-        }else if(validar_lugar(alumnos,fila,col)){
+        }else if(validar_lugar(alumnos,fila-1,col-1)){
             printf("\nYa existe un registro en ese lugar. Ingrese otro.\n");
         }else{
             ubicacion_ok=true;
@@ -148,9 +155,13 @@ void registrar_alumno(alumno_t alumnos[][MAX_COL]){
         }
     }while(promedio>max_nota || promedio<min_nota);
 
-    printf("\nDATOS INGRESADOS\n");
-    printf("\n| ROW | COL | CODIGO | EDAD | PROM. | NOMBRE\n");
-    printf("\n|  %d  |  %d  |  %04d  | %4d | %04.1f | %s\n",fila+1,col+1,alumnos[fila][col].codigo,alumnos[fila][col].edad,alumnos[fila][col].promedio,alumnos[fila][col].nombre);
+    alumnos[fila][col].codigo=codigo;
+    alumnos[fila][col].edad=edad;
+    alumnos[fila][col].promedio=promedio;
+
+    printf("\nDATOS INGRESADOS");
+    printf("\n| ROW | COL | CODIGO | EDAD | PROM. | NOMBRE");
+    printf("\n|  %d  |  %d  |  %04d  | %4d | %04.1f  | %s\n",fila+1,col+1,alumnos[fila][col].codigo,alumnos[fila][col].edad,alumnos[fila][col].promedio,alumnos[fila][col].nombre);
 
 }
 
@@ -159,12 +170,12 @@ void mostrar_lista(alumno_t alumnos[][MAX_COL]){
     printf("\n***LISTA DE ALUMNOS***\n");
     printf("Referencia: ROW->Fila COL->Asiento\n");
     printf("\n\n| ROW | COL | CODIGO | EDAD | PROM. | NOMBRE\n");
-    printf("-------------------------------------------------\n");
+    printf("-----------------------------------------------");
     for(int i=0;i<MAX_ROW;i++){
         for(int j=0;j<MAX_COL;j++){
-            printf("\n|  %d  |  %d  |  %04d  | %4d | %04.1f | %s\n",i+1,j+1,alumnos[i][j].codigo,alumnos[i][j].edad,alumnos[i][j].promedio,alumnos[i][j].nombre);
+            printf("\n|  %d  |  %d  |  %04d  | %4d | %04.1f  | %s",i+1,j+1,alumnos[i][j].codigo,alumnos[i][j].edad,alumnos[i][j].promedio,alumnos[i][j].nombre);
         }
-        printf("-------------------------------------------------\n");
+        printf("\n-----------------------------------------------");
     }
     
 }
