@@ -13,6 +13,7 @@ typedef struct{
 }estructura_t;
 
 typedef struct{
+    uint16_t codigo;
     uint16_t edad;
     char nombre[MAX_CHAR];
     float promedio;

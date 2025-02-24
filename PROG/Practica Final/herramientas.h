@@ -16,6 +16,7 @@
 int numero_aleatorio (int, int);
 void standby(void);
 void despedida(void);
+void valor_incorrecto(void);
 
 int numero_aleatorio(int max, int min){
     return rand()%(max-min+1)+min;
@@ -32,4 +33,9 @@ void despedida(void){
     printf("\nPresione Enter para finalizar.\n");
     fflush(stdin);
     getchar();
+}
+
+void valor_incorrecto(void){
+    printf("\nIngreso un valor incorrecto.");
+    printf("\nIngreselo nuevamente\n");
 }

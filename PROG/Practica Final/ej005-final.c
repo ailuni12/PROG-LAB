@@ -6,12 +6,24 @@
 #include "herramientas.h"
 #include "estructuras.h"
 
+#define min_cod 1
+#define max_cod 9999
+#define max_edad 110
+#define min_edad 18
+#define max_nota 10
+#define min_nota 1
+
+
 void menu(alumno_t [][MAX_COL]);
+void inicializar_lista(alumno_t [][MAX_COL]);
+void registrar_alumno(alumno_t [][MAX_COL]);
+bool validar_codigo(alumno_t [][MAX_COL],int);
 
 int main(void){
     alumno_t alumnos[MIN_ROW][MAX_COL];
 
     srand(time(NULL));
+    inicializar_lista(alumnos);
 
     return 0;
 }
@@ -30,6 +42,131 @@ void menu(alumno_t alumnos[][MAX_COL]){
         printf("\n[%d] Finalizar.",salida);
         scanf("%d",&op);
 
-        
+        switch (op){
+        case opcion1:
+            break;
+        case opcion2:
+            do{
+                registrar_alumno(alumnos);
+
+                printf("\nDesea Guardar otro item?\nSI-1 NO-0: ");
+                scanf("%d",&input_usuario);
+                if(input_usuario!=0 || input_usuario!=1){
+                    valor_incorrecto();
+                }
+            }while(input_usuario!=0 || input_usuario!=1);
+            break;
+        case opcion3:
+            break;
+        case opcion4:
+            break;
+        case salida:
+            despedida();
+            break;
+        default:
+            valor_incorrecto();
+            break;
+        }
     }while(op!=salida);
+}
+
+void inicializar_lista(alumno_t alumnos[][MAX_COL]){
+    for(int i=0;i<MAX_ROW;i++){
+        for(int j=0;j<MAX_COL;j++){
+            alumnos[i][j].codigo=0;
+            alumnos[i][j].edad=0;
+            strcpy(alumnos[i][j].nombre,"N/A");
+            alumnos[i][j].promedio=0;
+        }
+    }
+}
+
+void registrar_alumno(alumno_t alumnos[][MAX_COL]){
+    int codigo=0, edad=0, fila=0, col=0;
+    float promedio=0;
+    bool cod_ok=false, ubicacion_ok=false;
+
+    printf("\n|++| NUEVO ALUMNO |++|\n");
+
+    do{
+        printf("\nIngrese un codigo de %d digitos.",sizeof(max_cod));
+        printf("\nCodigo: ");
+        scanf("%d",&codigo);
+
+        if(codigo>max_cod || codigo<min_cod){
+            printf("\nERROR. El codigo no puede ser menor a %d ni mayor a %d.",min_cod,max_cod);
+            printf("\nIngreselo nuevamente.\n");
+        }else if(validar_codigo(alumnos,codigo)){
+            printf("\nERROR. El codigo ya existe.");
+            printf("\nIngreselo nuevamente.\n");
+        }else{
+            cod_ok=true;
+        }
+
+    }while(!cod_ok);
+
+    do{
+        printf("\nIngrese la ubicacion en el salon.\n");
+        printf("\nFila (%d a %d): ",MIN_ROW,MAX_ROW);
+        scanf("%d",&fila);
+        printf("\nAsiento(%d a %d): ",MIN_COL,MAX_COL);
+        scanf("%d",&col);
+
+        if(fila>MAX_ROW || fila<MIN_ROW || col>MAX_COL || col<MIN_COL){
+            valor_incorrecto();
+        }else if(validar_lugar(alumnos,fila,col)){
+            printf("\nYa existe un registro en ese lugar. Ingrese otro.\n");
+        }else{
+            ubicacion_ok=true;
+            fila-=1;
+            col-=1;
+        }
+    }while(!ubicacion_ok);
+
+    printf("\nIngrese el Nombre: \n");
+    fflush(stdin);
+    fgets(alumnos[fila][col].nombre,sizeof(alumnos[fila][col].nombre),stdin);
+    alumnos[fila][col].nombre[strcspn(alumnos[fila][col].nombre,"\n")]='\0';
+
+    do{
+        printf("\nIngrese la edad del alumno.\nEdad: ");
+        scanf("%d",&edad);
+
+        if(edad>max_edad || edad<min_edad){
+            printf("\nERROR. La edad no puede ser menor que %d ni mayor que %d.\n",min_edad,max_edad);
+        }
+    }while(edad>max_edad || edad<min_edad);
+
+    do{
+        printf("\nIngrese el promedio del alumno.\nPromedio: ");
+        scanf("%f",&promedio);
+
+        if(promedio>max_nota || promedio<min_nota){
+            printf("\nERROR. El promedio no puede ser menor que %d ni mayor que %d.\n",min_nota,max_nota);
+        }
+    }while(promedio>max_nota || promedio<min_nota);
+
+    printf("\nDATOS INGRESADOS\n");
+    printf("\n| ROW | COL | CODIGO | EDAD | PROM. | NOMBRE\n");
+    printf("\n|  %d  |  %d  |  %04d  | %4d | %04.1f | %s\n",fila+1,col+1,alumnos[fila][col].codigo,alumnos[fila][col].edad,alumnos[fila][col].promedio,alumnos[fila][col].nombre);
+
+}
+
+bool validar_codigo(alumno_t alumnos[][MAX_COL],int codigo){
+    for(int i=0;i<MAX_ROW;i++){
+        for(int j=0;j<MAX_COL;j++){
+            if(alumnos[i][j].codigo==codigo){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool validar_lugar(alumno_t alumnos[][MAX_COL],int fila,int col){
+    if(alumnos[fila][col].codigo!=0){
+        return true;
+    }else{
+        return false;
+    }
 }
