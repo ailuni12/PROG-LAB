@@ -1,0 +1,22 @@
+Se dispone de un vector vec de 500 posiciones, cuyos valores son números enteros aleatorios comprendidos entre 1 y 1000.
+
+Se solicita:
+1. Generar y cargar el (vector vec con valores aleatorios dentro del rango especificado.
+2. Procesar el vector vec para contar la cantidad de numeros que son múltiplos de:
+-5
+-2
+-3
+
+3.Almacenar estos conteos en un nuevo vector vecFinal, organizado de la siguiente manera:
+
+vecFinal[0]: cantidad de múltiplos de 5
+vecFinal[1]: cantidad de múltiplos de 2
+vecFinal[2]: cantidad de múltiplos de 3
+
+4. Determinar cuál de los tres tipos de múltiplos es el más frecuente y mostrar el resultado.
+
+Tareas para realizar
+-Implementar un subalgoritmo que genere y cargue vec con valores aleatorios.
+-Implementar un subalgoritmo que procese vec y cargue vecFinal con los conteos correspondientes.
+-Desarrollar una función que determine cuál de los tres valores de vecFinal es elmayor e indique qué tipo de múltiplo predominó.
+-Mostrar los vectores.
