@@ -1,0 +1,25 @@
+Escribe un algoritmo en PSeInt que determine si los números almacenados en un vector son capicúas o no. Un número capicúa es aquel que se lee igual de izquierda a derecha que de derecha a izquierda (por ejemplo, 121, 353, 9009).
+Los siguientes valores en el vector Vec en las posiciones correspondientes:  ya han sido cargados con esto valores:123445, 12321, 72327, 76542, 120021. 
+
+El algoritmo debera:
+1.Implementar una función llamada EsCapicua que reciba cada uno de los valores del vector como parámetro y retorne un valor lógico (verdadero o falso, o en este caso, 1 o 0) indicando si el número es capicúa o no.
+2.Informar al final del programa cuantos fueron capicúas.
+
+*** Ejecución Iniciada. ***
+--------------------
+        Vector 
+--------------------
+valor :1 = 123445
+valor :2 = 12321
+valor :3 = 72327
+valor :4 = 76542
+valor :5 = 120021
+-----------------------
+123445 NO es Capicua!!
+12321 es Capicúa !!
+72327 es Capicua !!
+76542 NO es Capicua !!
+120021 es Capicua !!
+-----------------------------
+Total de capicúas:3
+*** Ejecución Finalizada. ***
